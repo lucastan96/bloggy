@@ -12,20 +12,20 @@
 	    <h2>Sign In</h2>
 	    <p>Sign in now to post comments and vote posts! Or, register for a free account today!</p>
 	</div>
-	
+
 	<div class='container main-content'>
 	    <div class='row'>
 		<div class="col-sm-6">
 		    <div class='login-box'>
 			<h3>Sign In</h3>
-			<form action="loginProcess" method="post">
+			<form action="includes/loginprocess" method="post">
 			    <?php
 			    if (isset($login_message)) {
 				echo "<div id='message' title='Click to Dismiss'>" . $login_message . "</div>";
 			    }
 			    ?>
-			    <label for="inputEmail" class="sr-only">Username</label>
-			    <input type="text" name="username" id="username" class="form-control no-border input" placeholder="Username" required autofocus>
+			    <label for="inputEmail" class="sr-only">Email</label>
+			    <input type="email" name="email" id="username" class="form-control no-border input" placeholder="Email" required autofocus>
 			    <label for="inputPassword" class="sr-only">Password</label>
 			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required>
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
@@ -35,16 +35,24 @@
 		<div class="col-sm-6">
 		    <div class='register-box'>
 			<h3>Register</h3>
-			<form action="registerProcess" method="post">
+			<form action="includes/registerprocess" method="post">
 			    <?php
 			    if (isset($register_message)) {
 				echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
 			    }
 			    ?>
-			    <label for="inputEmail" class="sr-only">Username</label>
-			    <input type="text" name="username" id="username" class="form-control no-border input" placeholder="Username" required>
+			    <label for="inputEmail" class="sr-only">Email</label>
+			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" required autofocus>
 			    <label for="inputPassword" class="sr-only">Password</label>
-			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required>
+			    <input type="password" name="registerpassword" id="password" class="form-control no-border input" placeholder="Password" required>
+			    <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
+			    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control no-border input" placeholder="Confirm Password" required>
+			    <label for="inputName" class="sr-only">Name</label>
+			    <input type="text" name="yourName" id="name" class="form-control no-border input" placeholder="Name" required>
+			    <label for="inputAge" class="sr-only">Age</label>
+			    <input type="text" name="yourAge" id="age" class="form-control no-border input" placeholder="Age" required>
+			    <label for="inputMobile" class="sr-only">Mobile</label>
+			    <input type="text" name="yourMobile" id="mobile" class="form-control no-border input" placeholder="Mobile" required>
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 			</form>
 		    </div>
