@@ -20,7 +20,7 @@
 	    </ul>
 	    <form class="navbar-form navbar-right" role="search">
 		<div class="input-group">
-		    <input type="text" class="form-control no-border search" placeholder="Search">
+		    <input type="text" class="form-control no-border search" placeholder="Search Bloggy">
 		    <span class="input-group-btn">
 			<button class="btn btn-default no-border search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
 		    </span>

@@ -42,7 +42,7 @@
 			    }
 			    ?>
 			    <label for="inputEmail" class="sr-only">Username</label>
-			    <input type="text" name="username" id="username" class="form-control no-border input" placeholder="Username" required autofocus>
+			    <input type="text" name="username" id="username" class="form-control no-border input" placeholder="Username" required>
 			    <label for="inputPassword" class="sr-only">Password</label>
 			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required>
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
@@ -60,7 +60,8 @@
 	<script>
 	    $(document).ready(function () {
 		$(".right:nth-child(1)").addClass("active");
-		$(".container").delay(200).animate({opacity: 1}, 300);
+		$(".banner").delay(100).animate({opacity: 1}, 300);
+		$(".login-box, .register-box").delay(250).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>
