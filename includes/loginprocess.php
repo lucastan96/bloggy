@@ -6,7 +6,7 @@ if (isset($_SESSION['login_user'])) {
 }
 
 
-include_once 'includes/validate.php';
+include_once 'validate.php';
 
 if (isset($_POST['email'])) {
 
@@ -15,7 +15,7 @@ if (isset($_POST['email'])) {
     $required_fields = array('email', 'password');
     $form_errors = array_merge($form_errors, check_empty_fields($required_fields));
 
-    require_once('includes/connection.php');
+    require_once('connection.php');
 
     if (empty($form_errors)) {
 
@@ -41,9 +41,11 @@ if (isset($_POST['email'])) {
                     $_SESSION['id'] = $result['member_id'];
                     $_SESSION['user_status'] = $result['user_status'];
                     if ($result['user_status'] == 1) {
-                        header("Location:profile.php");
+                        echo 'hello';
+//                        header("Location:profile.php");
                     } else {
-                        header("Location:myprofile.php");
+                        echo 'hello';
+//                        header("Location:myprofile.php");
                     }
                     exit();
                 }
@@ -61,6 +63,6 @@ if (isset($_POST['email'])) {
 }
 
 if (isset($message)) {
-    include ("index.php");
+//    include ("../index");
     exit();
 }

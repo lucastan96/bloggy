@@ -3,33 +3,19 @@
 session_start();
 
 if (isset($_SESSION['login_user'])) {
-    header("Location: index.php");
+    header("Location: ../index");
     exit;
 }
 
-require_once('includes/connection.php');
-include_once ('includes/validate.php');
-
-
-$form_errors = array();
-
-
-$required_fields = array('email', 'password');
-
-$form_errors = array_merge($form_errors, check_empty_fields($required_fields));
-
-$fields_to_check_length = array('username' => 6, 'password' => 8);
-
-$form_errors = array_merge($form_errors, check_min_length($fields_to_check_length));
-
-$form_errors = array_merge($form_errors, check_email($_POST));
+require_once('connection.php');
+echo 'hi';
 
 
 $email = filter_input(INPUT_POST, 'registeremail', FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, 'registerpassword', FILTER_SANITIZE_STRING);
 $confirmpassword = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_STRING);
 $name = filter_input(INPUT_POST, 'yourName', FILTER_SANITIZE_STRING);
-$age = filter_input(INPUT_POST, 'yourAge', FILTER_SANITIZE_INT);
+$age = filter_input(INPUT_POST, 'yourAge', FILTER_SANITIZE_STRING);
 $mobile = filter_input(INPUT_POST, 'yourMobile', FILTER_SANITIZE_STRING);
 
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -67,7 +53,7 @@ if ($password == $confirmpassword) {
         $_SESSION['login_user'] = $email;
         $_SESSION['user_status'] = 0;
 
-        header("Location:index.php");
+        header("Location:../index");
         exit;
     } else {
         $message = "This email is not available.";
@@ -77,6 +63,6 @@ if ($password == $confirmpassword) {
 }
 
 if (isset($message)) {
-    include ("register.php");
+//    include ("login.php");
     exit();
 }
