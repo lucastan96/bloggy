@@ -1,0 +1,194 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: #f2f2f2;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    padding-left: 20px;
+}
+
+h1 a, h1 a:active, h1 a:visited {
+    color: #e60000;
+}
+
+.navbar {
+    margin-bottom: 10px;
+}
+
+.navbar i {
+    margin-left: 10px;
+}
+
+.navbar-nav {
+    margin-bottom: 0;
+}
+
+.navbar-nav:nth-of-type(2) {
+    margin-top: 0;
+}
+
+.navbar-nav > li {
+    background: #e6e6e6;
+}
+
+.navbar-nav > li > a {
+    color: black;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.navbar-nav > li > a:hover {
+    background: black;
+    color: white !important;
+    transition: 0.3s;
+}
+
+.navbar-toggle {
+    background: black !important;
+    margin-top: 22px;
+}
+
+.icon-bar {
+    background: white !important;
+}
+
+.active {
+    background: black !important;
+}
+
+.active a {
+    color: white !important;
+}
+
+.margin-true {
+    margin-right: 8px;
+}
+
+.no-border {
+    border-radius: 0;
+}
+
+.search {
+    margin-top: 10px;
+    height: 35px;
+    margin: 0;
+}
+
+button.search {
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+.main-content {
+    opacity: 0;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+h2, h3 {
+    font-family: 'Roboto Slab', serif;
+}
+
+.post {
+    background: white;
+    margin-bottom: 20px;
+    padding: 30px;
+    padding-top: 5px;
+    border: 1.5px solid #e6e6e6;
+    border-radius: 4px;
+}
+
+.input {
+    height: 35px;
+}
+
+.submit {
+    margin-top: 25px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.submit:hover {
+    background: black;
+    color: white;
+    transition: 0.3s;
+}
+
+footer {
+    text-align: center;
+    background: #1a1a1a;
+    padding: 40px;
+    color: white;
+}
+
+@media only screen and (min-width: 768px) { 
+    .navbar {
+	margin-top: 20px;
+	margin-bottom: 20px;
+    }
+
+    .navbar ul:first-child {
+	margin-left: 20px;
+    }
+
+    .navbar i {
+	margin-left: 0;
+    }
+
+    .navbar-nav > li {
+	margin-top: 18px;
+	margin-left: 15px;
+	padding-left: 0;
+    }
+
+    .navbar-nav > li > a {
+	line-height: 50px;
+	height: 50px;
+	padding-top: 0;
+    }
+
+    .search {
+	margin-top: 10px;
+	height: 50.5px;
+    }
+
+    button.search {
+	padding-left: 17px;
+	padding-right: 17px;
+    }
+
+    #signin-btn {
+	background: #e60000;
+	margin-left: 0;
+    }
+
+    #signin-btn a {
+	color: white;
+    }
+
+    h1 {
+	padding-left: 0;
+    }
+
+    h1 a:hover {
+	color: red;
+    }
+
+    .main-content {
+	margin-top: 30px;
+    }
+
+    .input {
+	height: 50.5px;
+    }
+
+    .submit {
+	margin-top: 20px;
+	height: 45px;
+    }
+}
