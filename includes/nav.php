@@ -6,8 +6,8 @@ if (isset($_SESSION['login_user'])) {
     $statement = $db->prepare($query);
     $statement->bindValue(":id", $id);
     $statement->execute();
-    $result_array = $statement->fetch();
-    $name = $result_array['first_name'];
+    $nav_array = $statement->fetch();
+    $name = $nav_array['first_name'];
     $statement->closeCursor();
 }
 ?>
