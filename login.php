@@ -5,6 +5,14 @@ if (isset($_SESSION['login_user'])) {
     header("Location: index");
     exit();
 }
+
+require_once 'includes/connection.php';
+
+$query = "SELECT * FROM countries";
+$statement = $db->prepare($query);
+$statement->execute();
+$result_array = $statement->fetchAll();
+$statement->closeCursor();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,18 +57,25 @@ if (isset($_SESSION['login_user'])) {
 				echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
 			    }
 			    ?>
-			    <label for="inputEmail" class="sr-only">Email</label>
+			    <label for="registeremail" class="sr-only">Email</label>
 			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" required autofocus>
+			    <label for="yourFirstName" class="sr-only">First Name</label>
+			    <input type="text" name="yourFirstName" id="firstname" class="form-control no-border input" placeholder="First Name" required>
+			    <label for="yourLastName" class="sr-only">Last Name</label>
+			    <input type="text" name="yourLastName" id="lastname" class="form-control no-border input" placeholder="Last Name" required>
+			    <label for="yourAge" class="sr-only">Age</label>
+			    <input type="text" name="yourAge" id="age" class="form-control no-border input" placeholder="Age" required>
+			    <label for="yourCountry" class="sr-only">Country</label>
+			    <select class="form-control no-border input" id="category" name="yourCountry" required>
+				<option value="" selected="selected">Select a Country</option>
+				<?php foreach ($result_array as $countries) : ?>
+    				<option value="<?php echo $countries['country_id']; ?>"><?php echo htmlspecialchars($countries['country_name']); ?></option>
+				<?php endforeach; ?>
+			    </select>
 			    <label for="inputPassword" class="sr-only">Password</label>
 			    <input type="password" name="registerpassword" id="password" class="form-control no-border input" placeholder="Password" required>
 			    <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
 			    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control no-border input" placeholder="Confirm Password" required>
-			    <label for="inputName" class="sr-only">Name</label>
-			    <input type="text" name="yourName" id="name" class="form-control no-border input" placeholder="Name" required>
-			    <label for="inputAge" class="sr-only">Age</label>
-			    <input type="text" name="yourAge" id="age" class="form-control no-border input" placeholder="Age" required>
-			    <label for="inputMobile" class="sr-only">Mobile</label>
-			    <input type="text" name="yourMobile" id="mobile" class="form-control no-border input" placeholder="Mobile" required>
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 			</form>
 		    </div>

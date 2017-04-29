@@ -2,12 +2,12 @@
 if (isset($_SESSION['login_user'])) {
     $id = $_SESSION['id'];
 
-    $query = "SELECT name FROM member_details WHERE member_id=:id";
+    $query = "SELECT first_name FROM member_details WHERE member_id = :id";
     $statement = $db->prepare($query);
     $statement->bindValue(":id", $id);
     $statement->execute();
     $result_array = $statement->fetch();
-    $name = $result_array['name'];
+    $name = $result_array['first_name'];
     $statement->closeCursor();
 }
 ?>

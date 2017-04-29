@@ -85,7 +85,7 @@ if (!isset($_SESSION['login_user'])) {
 	<script src="scripts/JasnyBootstrap/js/jasny-bootstrap.min.js"></script>
 	<script>
 	    $(document).ready(function () {
-		$(".right:nth-child(1)").addClass("active");
+		$(".left:nth-child(2)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
 	    });
 	</script>
