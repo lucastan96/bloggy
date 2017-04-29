@@ -64,13 +64,12 @@ if (!isset($_SESSION['login_user'])) {
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="allow_comments">Comments:</label>
 		    <div class="col-sm-10 checkbox">
-			<label class="checkbox-inline"><input type="checkbox" name="allow_comments" value="1" checked>Yes</label>
-			<label class="checkbox-inline"><input type="checkbox" name="allow_comments" value="0">No</label>
+			<label class="radio-inline"><input type="radio" name="allow_comments" value="1" checked>Yes</label>
+			<label class="radio-inline"><input type="radio" name="allow_comments" value="0">No</label>
 		    </div>
 		</div>
 		<div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-			<input type="hidden" name="member_id" value="<?php echo $member_id; ?>">
 			<button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 		    </div>
 		</div>
