@@ -87,6 +87,7 @@ if (!isset($_SESSION['login_user'])) {
 	    $(document).ready(function () {
 		$(".left:nth-child(2)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
+		$("form").delay(250).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>

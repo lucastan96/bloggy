@@ -148,7 +148,7 @@ require_once 'includes/connection.php';
 	$(document).ready(function () {
 	    $(".left:nth-child(1)").addClass("active");
 	    $(".post").delay(100).animate({opacity: 1}, 300);
-	    $(".sidebar").delay(250).animate({opacity: 1}, 300);
+	    $(".sidebar").delay(200).animate({opacity: 1}, 300);
 	});
     </script>
 </body>

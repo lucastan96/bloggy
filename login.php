@@ -92,7 +92,7 @@ $statement->closeCursor();
 	    $(document).ready(function () {
 		$(".right:nth-child(1)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
-		$(".login-box, .register-box").delay(250).animate({opacity: 1}, 300);
+		$(".login-box, .register-box").delay(200).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>
