@@ -23,7 +23,6 @@ if (count($result_array)) {
     endforeach;
 
     if (!password_verify($password, $true_password)) {
-	echo "HELLO";
 	$message = "Either the email or password is incorrect. Try it again.";
     } else {
 	session_start();
