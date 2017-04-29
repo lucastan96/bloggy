@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+require_once 'includes/connection.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,7 +19,7 @@
 		    <div class='post'>
 			<div class='post-details'>
 			    <div class='row'>
-				<div class="col-sm-9">
+				<div class="col-sm-10">
 				    <h2 class='post-title'><a href="post?id=2">Love You Alvin, Yeah I Really Do!</a></h2>
 				    <div class='post-tags'>
 					<p><strong>Tags:</strong>&nbsp;&nbsp;<span><a href=''>Love</a></span><span><a href=''>Alvin</a></span><span><a href=''>Really</a></span>&nbsp;&nbsp;+ 2 More</p>
@@ -23,7 +28,7 @@
 				    <div class="post-author-name"><a href='member?id=1'>Lucas Tan</a></div>
 				    <div class='post-date'><i class="fa fa-clock-o margin-true" aria-hidden="true"></i>Published on 2017-04-28 16:25</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-2">
 				    <div class='post-stats'>
 					<div class='post-views-count' title='540 Views'><i class="fa fa-eye margin-true" aria-hidden="true"></i>540</div>
 					<div class='post-votes-count' title='103 Upvotes'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>103</div>
@@ -39,7 +44,7 @@
 		    <div class='post'>
 			<div class='post-details'>
 			    <div class='row'>
-				<div class="col-sm-9">
+				<div class="col-sm-10">
 				    <h2 class='post-title'><a href="post?id=1">Hello World, We Are Bloggy!</a></h2>
 				    <div class='post-tags'>
 					<p><strong>Tags:</strong>&nbsp;&nbsp;<span><a href=''>Hello</a></span><span><a href=''>Bloggy</a></span><span><a href=''>Welcome</a></span></p>
@@ -48,7 +53,7 @@
 				    <div class="post-author-name"><a href='member?id=1'>Lucas Tan</a></div>
 				    <div class='post-date'><i class="fa fa-clock-o margin-true" aria-hidden="true"></i>Published on 2017-04-22 09:40</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-2">
 				    <div class='post-stats'>
 					<div class='post-views-count' title='2725 Views'><i class="fa fa-eye margin-true" aria-hidden="true"></i>943</div>
 					<div class='post-votes-count' title='482 Upvotes'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>482</div>
@@ -63,6 +68,13 @@
 		    </div>
 		</div>
 		<div class="col-sm-4">
+		    <?php if(isset($_SESSION['user_status'])) { if($_SESSION['user_status'] == 1 || $_SESSION['user_status'] == 2) { ?>
+		    <div class="writer-tools sidebar">
+			<h3><i class="fa fa-wrench margin-true" aria-hidden="true"></i>Writer Tools</h3>
+			<a href="addpost" role="button" class="btn btn-default no-border">Create Post</a>
+			<a href="viewposts" role="button" class="btn btn-default no-border">View My Posts</a>
+		    </div>
+		    <?php }} ?>
 		    <div class="post-today sidebar">
 			<h3><i class="fa fa-heart margin-true" aria-hidden="true"></i>Howdy!</h3>
 			<p>We have <strong>2 new articles</strong> for you today. Enjoy!</p>

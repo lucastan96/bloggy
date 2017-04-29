@@ -1,0 +1,71 @@
+.banner {
+    opacity: 0;
+    text-align: center;
+    height: 200px;
+    background: url(../images/backgrounds/background1.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.banner h2 {
+    font-size: 40px;
+    padding-top: 50px;
+}
+
+.main-content {
+    margin-bottom: 60px;
+}
+
+#message {
+    text-align: left;
+    background: red;
+    color: white;
+    padding-left: 8px;
+    line-height: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#message div {
+    float: right;
+}
+
+#message i {
+    margin-right: 6px;
+}
+
+label {
+    text-align: right;
+    margin-top: 14px;
+}
+
+.input, textarea {
+    margin-bottom: 20px;
+}
+
+textarea {
+    padding: 12px !important;
+}
+
+.checkbox-inline {
+    margin: 0;
+    text-align: left;
+}
+
+@media only screen and (min-width: 768px) {
+    .banner {
+	margin-top: 30px;
+	height: 300px;
+    }
+
+    .banner h2 {
+	padding-top: 100px;
+    }
+}

@@ -2,13 +2,18 @@
 session_start();
 
 require_once 'includes/connection.php';
+
+if (!isset($_SESSION['login_user'])) {
+    header("Location: login");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
 	<?php include("Includes/head.php"); ?>
-	<title>About - Bloggy</title>
-	<link href="styles/about.css" rel="stylesheet">
+	<title>Profile - Bloggy</title>
+	<link href="styles/profile.css" rel="stylesheet">
     </head>
     <body>
 	<?php include("Includes/nav.php"); ?>
@@ -24,7 +29,7 @@ require_once 'includes/connection.php';
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script>
 	    $(document).ready(function () {
-		$(".left:nth-child(3)").addClass("active");
+		$(".left:nth-child(4)").addClass("active");
 		$(".container").delay(200).animate({opacity: 1}, 300);
 	    });
 	</script>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (isset($_SESSION['login_user'])) {
+    header("Location: index");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -45,10 +45,11 @@
 }
 
 .post-tags span {
+    font-size: 10px;
     background: black;
-    padding: 5px;
-    padding-left: 9px;
-    padding-right: 9px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-right: 5px;
     text-transform: uppercase;
 }
