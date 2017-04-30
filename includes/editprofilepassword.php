@@ -11,30 +11,41 @@ require_once('connection.php');
 
 $email = $_SESSION['login_user'];
 
-$password = filter_input(INPUT_POST, 'password',FILTER_SANITIZE_STRING);
-$confirmpassword = filter_input(INPUT_POST, 'confirmpassword',FILTER_SANITIZE_STRING);
+$currentpassword = filter_input(INPUT_POST, 'currentpassword', FILTER_SANITIZE_STRING);
+$newpassword = filter_input(INPUT_POST, 'newpassword', FILTER_SANITIZE_STRING);
+$confirmpassword = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_STRING);
 
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+$query = "SELECT password FROM member WHERE email = :email";
+$statement = $db->prepare($query);
+$statement->bindValue(":email", $email);
+$statement->execute();
+$result_array = $statement->fetch();
+$true_password = $result_array["password"];
+$statement->closeCursor();
 
-if($password == $confirmpassword) {
-    
-    $query2 = "UPDATE member SET password= :password  WHERE email = :email";
-    $statement2 = $db->prepare($query2);
-    $statement2->bindValue(":email", $email);
-    $statement2->bindValue(":password", $hashed_password);
-    $statement2->execute();
-    $statement2->closeCursor();
-    
-    session_start();
+if (password_verify($currentpassword, $true_password)) {
+    if ($newpassword == $confirmpassword) {
+	$hashed_password = password_hash($newpassword, PASSWORD_DEFAULT);
 
-    $_SESSION['login_user'] = $email;
-    header("Location:../profile");
-    exit();
+	$query2 = "UPDATE member SET password = :password WHERE email = :email";
+	$statement2 = $db->prepare($query2);
+	$statement2->bindValue(":email", $email);
+	$statement2->bindValue(":password", $hashed_password);
+	$statement2->execute();
+	$statement2->closeCursor();
+
+	session_start();
+
+	$_SESSION['login_user'] = $email;
+	header("Location:../profile");
+	exit();
+    } else {
+	$message = "Error: Your news password does not match.";
+    }
 } else {
-  $message = "The password does't match.Try it again";
+    $message = "Error: Your current password is incorrect.";
 }
 
 if (isset($message)) {
-    include ("../profile.php");
-    exit();
+    echo $message;
 }

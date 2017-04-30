@@ -6,6 +6,24 @@
     padding-bottom: 20px;
 }
 
+.post h2 i {
+    margin-right: 15px; 
+}
+
+.search-nav {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.search-nav div, .search-nav a {
+    display: inline;
+}
+
+.search-nav div {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
 .person-search h3 {
     padding-top: 14px;
 }

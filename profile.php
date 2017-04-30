@@ -25,7 +25,7 @@ foreach ($results_array as $results):
     $country_id = $results["country_id"];
 endforeach;
 
-$query2 = "SELECT * FROM member WHERE member_id = :id";
+$query2 = "SELECT user_status, email FROM member WHERE member_id = :id";
 $statement2 = $db->prepare($query2);
 $statement2->bindValue(":id", $id);
 $statement2->execute();
@@ -34,7 +34,6 @@ $statement2->closeCursor();
 
 foreach ($results_array2 as $results):
     $email = $results["email"];
-    $password = $results['password'];
     $user_status = $results["user_status"];
 endforeach;
 
@@ -114,18 +113,24 @@ $statement5->closeCursor();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-1" for="password">Password:</label>
+                            <label class="control-label col-sm-1" for="currentpassword">Current Password:</label>
                             <div class="col-sm-11">
-                                <input type="password" class="form-control no-border input" name="password" value="<?php echo htmlspecialchars($password); ?>" >
+                                <input type="password" class="form-control no-border input" name="currentpassword" placeholder="Enter your current password">
+                            </div>
+                        </div>
+			<div class="form-group">
+                            <label class="control-label col-sm-1" for="newpassword">New Password:</label>
+                            <div class="col-sm-11">
+                                <input type="password" class="form-control no-border input" name="newpassword" placeholder="Enter your new password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="confirmpassword">Confirm Password:</label>
                             <div class="col-sm-11">
-                                <input type="password" class="form-control no-border input" name="confirmpassword" value="<?php echo htmlspecialchars($password); ?>" >
+                                <input type="password" class="form-control no-border input" name="confirmpassword" placeholder="Confirm your new password">
                             </div>
                         </div>
-                        <button class="btn btn-default no-border submit" type="submit">Change My Password</button>
+                        <button class="btn btn-default no-border submit" type="submit">UPDATE</button>
                         <br>
                     </form>
                 </div>
@@ -164,7 +169,7 @@ $statement5->closeCursor();
                                 </select>
                             </div>
                         </div>
-                        <button class="btn btn-default no-border submit" type="submit">Edit My Details</button>
+                        <button class="btn btn-default no-border submit" type="submit">UPDATE</button>
                         <br>
                     </form>
                 </div>
