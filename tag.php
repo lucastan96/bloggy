@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'includes/connection.php';
+require_once 'includes/checkinactivity.php';
 
 $tag_name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_URL);
 
@@ -20,7 +21,7 @@ if ($tag_name == "") {
 <html lang="en">
     <head>
 	<?php include("Includes/head.php"); ?>
-        <title><?php echo htmlspecialchars($tag_name) ?> - Tag - Bloggy</title>
+        <title><?php echo htmlspecialchars($tag_name) ?> - Bloggy</title>
         <link href="styles/tag.css" rel="stylesheet">
     </head>
     <body>
@@ -64,7 +65,6 @@ if ($tag_name == "") {
     			<h3>No results found.</h3>
     		    </div>
 		    <?php } ?>
-
 		</div>
 		<?php include("includes/sidebar.php"); ?>
 	    </div>

@@ -2,12 +2,21 @@
 session_start();
 
 require_once 'includes/connection.php';
+require_once 'includes/checkinactivity.php';
 
 $query = "SELECT * FROM post ORDER BY post_id DESC";
 $statement = $db->prepare($query);
 $statement->execute();
 $result_array = $statement->fetchAll();
 $statement->closeCursor();
+
+function truncate($text, $chars = 25) {
+    $text = $text . " ";
+    $text = substr($text, 0, $chars);
+    $text = substr($text, 0, strrpos($text, ' '));
+    $text = $text . "...";
+    return $text;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,11 +53,10 @@ $statement->closeCursor();
 	    				<div class="col-sm-10">
 	    				    <h2 class='post-title'><a href="post?id=<?php echo htmlspecialchars($post_id); ?>"><?php echo htmlspecialchars($result['post_title']); ?></a></h2>
 	    				    <div class='post-tags'>
-	    					<strong>Tags:</strong>&nbsp;&nbsp;
 						    <?php
 						    $count = 0;
 						    for ($i = 0; $i < sizeof($tags_array); $i++) {
-							if ($count <= 2) {
+							if ($count <= 3) {
 							    ?>
 		    					<span><a href='tag?name=<?php echo htmlspecialchars($tags_array[$i]); ?>'><?php echo htmlspecialchars($tags_array[$i]); ?></a></span>
 							    <?php
@@ -56,18 +64,10 @@ $statement->closeCursor();
 							}
 						    }
 						    ?>
-	    					&nbsp;
-	    					&nbsp;
 	    				    </div>
-						<?php
-						if ($count >= 2) {
-						    $more = sizeof($tags_array) - $count;
-						    echo "<div class='more-tags' data-toggle='tooltip' data-placement='bottom' title=''>+ " . $more . " More</div>";
-						}
-						?>
 	    				    <a href = 'member?id=<?php echo htmlspecialchars($result['member_id']); ?>' title = '<?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']); ?>'><img class = "post-author-pic" src = "images/profiles/<?php echo htmlspecialchars($result2['profile_pic']); ?>" alt = "<?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']); ?> Photo"></a>
 	    				    <div class = "post-author-name"><a href = 'member?id=<?php echo htmlspecialchars($result['member_id']); ?>'><?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']);
-						?></a></div>
+						    ?></a></div>
 	    				    <div class='post-date'><i class="fa fa-clock-o margin-true" aria-hidden="true"></i>Published on <?php echo htmlspecialchars($result['post_date']); ?></div>
 	    				</div>
 	    				<div class="col-sm-2">
@@ -81,7 +81,7 @@ $statement->closeCursor();
 						    $comment_count = $result_array3[0];
 						    $statement3->closeCursor();
 						    ?>
-	    					<div class='post-votes-count' title='103 Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>103</div>
+	    					<div class='post-votes-count' title='0 Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>0</div>
 	    					<div class='post-comments-count' title='<?php echo $comment_count; ?> Comment(s)'><i class="fa fa-comments margin-true" aria-hidden="true"></i><?php echo $comment_count; ?></div>
 	    				    </div>
 	    				</div>
@@ -90,7 +90,7 @@ $statement->closeCursor();
 				    <?php if ($result['post_image'] != "") { ?>
 					<img class='post-image' src="images/uploads/<?php echo htmlspecialchars($result['post_image']); ?>" alt="Post Photo">
 				    <?php } ?>
-	    			<p class='post-content'><?php echo htmlspecialchars($result['post_content']); ?></p>
+	    			<p class='post-content'><?php echo truncate(htmlspecialchars($result['post_content']), 200); ?></p>
 	    			<a href="post?id=<?php echo htmlspecialchars($post_id); ?>" role="button" class="btn btn-default button no-border post-button"><i class="fa fa-arrow-right margin-true" aria-hidden="true"></i>Read More</a>
 	    		    </div>
 				<?php
@@ -105,7 +105,7 @@ $statement->closeCursor();
     			<h3><i class="fa fa-hand-paper-o margin-true" aria-hidden="true"></i>No posts yet, check back later!</h3>
     		    </div>
     		</div>
-		<?php
+		    <?php
 		}
 		include("includes/sidebar.php");
 		?>

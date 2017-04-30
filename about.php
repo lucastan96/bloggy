@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'includes/connection.php';
+require_once 'includes/checkinactivity.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

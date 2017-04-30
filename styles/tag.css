@@ -1,5 +1,5 @@
 .post {
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .post:nth-child(1) {
@@ -8,4 +8,8 @@
 
 .post-author-pic {
     margin-top: 5px;
+}
+
+.post-author-name {
+    margin-top: 18px;
 }

@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'includes/connection.php';
+require_once 'includes/checkinactivity.php';
 
 if (!isset($_SESSION['login_user'])) {
     header("Location: login");
@@ -29,7 +30,7 @@ if (!isset($_SESSION['login_user'])) {
 	</div>
 
 	<div class='container main-content'>
-	    <form action="includes/addpostprocess" method="post">
+	    <form action="includes/addpostprocess" method="post" enctype="multipart/form-data">
 		<?php
 		if (isset($register_message)) {
 		    echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";

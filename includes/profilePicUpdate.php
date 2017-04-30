@@ -7,11 +7,14 @@ if (!isset($_SESSION['login_user'])) {
     exit;
 }
 
-require_once('includes/connection.php');
+require_once('connection.php');
 
-$target_dir = "images/profilepic/";
+$target_dir = "../images/profiles/";
 $target_file = $target_dir . basename($_FILES["picture"]["name"]);
 $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+
+define("WIDTH", 500);
+define("HEIGHT", 500);
 
 $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_STRING);
 
@@ -33,7 +36,7 @@ if ($request_method == 'POST') {
         include 'profile.php';
         exit();
     } else {
-        $member_id = filter_input(INPUT_POST, "member_id", FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
+        $member_id = $_SESSION["id"];
 
         $query1 = "SELECT profile_pic FROM member_details WHERE member_id = :member_id";
         $statement1 = $db->prepare($query1);
@@ -43,14 +46,14 @@ if ($request_method == 'POST') {
         $statement1->closeCursor();
         $profile_pic_old = $result_array1['profile_pic'];
 
-        if ($profile_pic_old != "profile_pic.jpg") {
-            unlink("images/profile_pic/" . $profile_pic_old);
+        if ($profile_pic_old != "default.png") {
+            unlink("../images/profiles/" . $profile_pic_old);
         }
 
-        $pic_name = $target_dir . "member_" . $member_id . "." . $imageFileType;
+        $pic_name = $target_dir . "member_" . $member_id . ".png";
 
         if (move_uploaded_file($_FILES["picture"]["tmp_name"], $pic_name)) {
-            $profile_pic_new = "member_" . $member_id . "." . $imageFileType;
+            $profile_pic_new = "member_" . $member_id . ".png";
 
             $query2 = "UPDATE member_details SET profile_pic = :profile_pic WHERE member_id = :member_id";
             $statement2 = $db->prepare($query2);
@@ -59,12 +62,13 @@ if ($request_method == 'POST') {
             $statement2->execute();
             $statement2->closeCursor();
 
-            $_SESSION['profilePicUpdated'] = 1;
-            header("Location: profile.php");
+            // $_SESSION['profilePicUpdated'] = 1;
+	    
+            header("Location: ../profile");
             exit();
         }
     }
 } else {
-    header("Location: profile.php");
+    header("Location: ../profile");
     exit();
 }

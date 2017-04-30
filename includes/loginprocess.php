@@ -33,6 +33,7 @@ if (count($result_array)) {
 	endforeach;
 
 	$_SESSION['login_user'] = $email;
+	$_SESSION['last_time'] = time();
 
 	header("Location: ../index");
 	exit();

@@ -17,10 +17,33 @@ $statement->execute();
 $results_array = $statement->fetchAll();
 $statement->closeCursor();
 
-foreach($results_array as $results):
+foreach ($results_array as $results):
     $first_name = $results["first_name"];
     $last_name = $results["last_name"];
+    $profile_pic = $results["profile_pic"];
+    $age = $results["age"];
+    $country_id = $results["country_id"];
 endforeach;
+
+$query2 = "SELECT email, user_status FROM member WHERE member_id = :id";
+$statement2 = $db->prepare($query2);
+$statement2->bindValue(":id", $id);
+$statement2->execute();
+$results_array2 = $statement2->fetchAll();
+$statement2->closeCursor();
+
+foreach ($results_array2 as $results):
+    $email = $results["email"];
+    $user_status = $results["user_status"];
+endforeach;
+
+$query3 = "SELECT country_name FROM countries WHERE country_id = :country_id";
+$statement3 = $db->prepare($query3);
+$statement3->bindValue(":country_id", $country_id);
+$statement3->execute();
+$results_array3 = $statement3->fetch();
+$country = $results_array3["country_name"];
+$statement3->closeCursor();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,12 +56,69 @@ endforeach;
 	<?php include("Includes/nav.php"); ?>
 
 	<div class="banner">
-	    <h2><?php echo htmlspecialchars($first_name) . " " . htmlspecialchars($last_name); ?></h2>
+	    <h2>Profile</h2>
 	    <p>View and change your profile information and settings here!</p>
 	</div>
 
 	<div class='container main-content'>
-	    
+	    <div class="profile-details">
+		<div class='row'>
+		    <div class='col-sm-6'>
+			<div class='profile-pic'><img src="images/profiles/<?php echo htmlspecialchars($profile_pic); ?>"></div>
+			<form method="post" class="profile-pic-update" action='includes/profilePicUpdate' enctype="multipart/form-data">
+			    <input id='file' type='file' class='btn btn-default profile-pic-button' name='picture'>
+			    <label class="btn btn-default no-border" for='file'>Choose</label>
+			    <button type="submit" class="btn btn-default no-border">Update</button>
+			</form>
+		    </div>
+		    <div class='col-sm-6'>
+			<div class='profile-name'><?php echo htmlspecialchars($first_name) . " " . htmlspecialchars($last_name); ?></div>
+			<div class='profile-status'>
+			    <?php
+			    if ($user_status == 0) {
+				$user_pos = "Member";
+			    } else if ($user_status == 1) {
+				$user_pos = "Writer";
+			    } else if ($user_status == 2) {
+				$user_pos = "Admin";
+			    }
+			    echo "<span>" . $user_pos . "</span>";
+			    ?>
+			</div>
+		    </div>
+		</div>
+		<div class='profile-settings'>
+		    <form class="form-horizontal" method="post">
+			<h3>Account Details</h3>
+			<p>Your profile details are displayed below, as well as an option to change your password.</p>
+			<br>
+			<div class="form-group">
+			    <label class="control-label col-sm-1" for="email">Email:</label>
+			    <div class="col-sm-11">
+				<input type="text" class="form-control no-border input" name="email" value="<?php echo htmlspecialchars($email); ?>" title="Not Changeable" disabled>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-1" for="dateofbirth">Date of Birth:</label>
+			    <div class="col-sm-11">
+				<input type="text" class="form-control no-border input" name="dateofbirth" value="<?php echo htmlspecialchars($date_of_birth); ?>" title="Under Construction" disabled>
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="control-label col-sm-1" for="password">Password:</label>
+			    <div class="col-sm-11">
+				<div class="input-group">
+				    <input type="password" class="form-control no-border input" name="password" value="fakepassword" readonly>
+				    <div class="input-group-btn">
+					<a href="#" role="button" class="btn btn-default no-border input" id="password-modal-btn" data-tooltip="tooltip" data-placement="top" title="Change Password" data-toggle='modal' data-target='#password-modal'><i class="fa fa-pencil" aria-hidden="true"></i></a>
+				    </div>
+				</div>
+			    </div>
+			</div>
+			<br>
+		    </form>
+		</div>
+	    </div>
 	</div>
 
 	<?php include("Includes/footer.php"); ?>
@@ -51,7 +131,7 @@ endforeach;
 	    $(document).ready(function () {
 		$(".left:nth-child(4)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
-		$("form").delay(200).animate({opacity: 1}, 300);
+		$(".profile-details").delay(200).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>

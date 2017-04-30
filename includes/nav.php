@@ -24,25 +24,25 @@ if (isset($_SESSION['login_user'])) {
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 	    <ul class="nav navbar-nav">
-		<li class='left'><a href="index"><i class="fa fa-home margin-true" aria-hidden="true"></i>Home</a></li>
-		<li class='left'><a href="writers"><i class="fa fa-info-circle margin-true" aria-hidden="true"></i>Writers</a></li>
-		<li class='left'><a href="about"><i class="fa fa-info-circle margin-true" aria-hidden="true"></i>About</a></li>
+		<li class='left'><a href="index"><i class="fa fa-home fa-fw margin-true" aria-hidden="true"></i>Home</a></li>
+		<li class='left'><a href="writers"><i class="fa fa-pencil fa-fw margin-true" aria-hidden="true"></i>Writers</a></li>
+		<li class='left'><a href="about"><i class="fa fa-info-circle fa-fw margin-true" aria-hidden="true"></i>About</a></li>
 		<?php if (isset($_SESSION['login_user'])) { ?>
-    		<li class='left'><a href="profile"><i class="fa fa-user margin-true" aria-hidden="true"></i><?php echo htmlspecialchars($name); ?></a></li>
+    		<li class='left'><a href="profile"><i class="fa fa-user fa-fw margin-true" aria-hidden="true"></i><?php echo htmlspecialchars($name); ?></a></li>
 		<?php } ?>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 		<?php if (isset($_SESSION['login_user'])) { ?>
-    		<li class='right' id='signin-btn'><a href="logout"><i class="fa fa-sign-out margin-true" aria-hidden="true"></i>Sign Out</a></li>
+    		<li class='right' id='signin-btn'><a href="logout"><i class="fa fa-sign-out fa-fw margin-true" aria-hidden="true"></i>Sign Out</a></li>
 		<?php } else { ?>
-    		<li class='right' id='signin-btn'><a href="login"><i class="fa fa-sign-in margin-true" aria-hidden="true"></i>Sign In</a></li>
+    		<li class='right' id='signin-btn'><a href="login"><i class="fa fa-sign-in fa-fw margin-true" aria-hidden="true"></i>Sign In</a></li>
 		<?php } ?>
 	    </ul>
-	    <form class="navbar-form navbar-right" role="search">
+	    <form class="navbar-form navbar-right" role="search" method="get" action="search">
 		<div class="input-group">
-		    <input type="text" class="form-control no-border search" placeholder="Search Bloggy">
+		    <input type="text" class="form-control no-border search" placeholder="Search Bloggy" name="query">
 		    <span class="input-group-btn">
-			<button class="btn btn-default no-border search" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+			<button class="btn btn-default no-border search" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 		    </span>
 		</div>
 	    </form>

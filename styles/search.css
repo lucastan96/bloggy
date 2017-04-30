@@ -1,0 +1,23 @@
+.post {
+    padding-bottom: 15px;
+}
+
+.post:nth-child(1) {
+    padding-bottom: 20px;
+}
+
+.person-search h3 {
+    padding-top: 14px;
+}
+
+.post h4 {
+    margin-top: 20px;
+}
+
+.post-author-pic {
+    margin-top: 5px;
+}
+
+.post-author-name {
+    margin-top: 18px;
+}

@@ -56,6 +56,7 @@ if ($password == $confirmpassword) {
 	$_SESSION['id'] = $result_array4['member_id'];
 	$_SESSION['login_user'] = $email;
 	$_SESSION['user_status'] = 0;
+	$_SESSION['last_time'] = time();
 
 	header("Location:../index");
 	exit();
