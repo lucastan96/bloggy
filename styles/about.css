@@ -19,23 +19,36 @@
     padding-top: 50px;
 }
 
-.login-box, .register-box {
-    opacity: 0;
+.main-content {
+    margin-bottom: 60px;
+}
+
+.about-content {
     background: white;
-    text-align: center;
-    padding: 40px;
-    padding-top: 20px;
     border: 1.5px solid #e6e6e6;
     border-radius: 4px;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    opacity: 0;
     margin-bottom: 20px;
 }
 
-h3 {
-    margin-bottom: 30px;
+.about-content h2 {
+    line-height: 50px;
 }
 
-.input {
-    margin-bottom: 8px;
+.about-content h2 span {
+    font-family: 'Pacifico', cursive;
+    color: #e60000;
+    margin-right: 5px;
+    font-size: 40px;
+}
+
+.er-diagram {
+    width: 100%;
+    margin-top: 15px;
 }
 
 @media only screen and (min-width: 768px) {

@@ -9,6 +9,14 @@
     padding-top: 60px !important;
 }
 
+.older, .newer {
+    margin-bottom: 25px;
+}
+
+.newer {
+    float: right;
+}
+
 @media only screen and (min-width: 768px) {
     
 }

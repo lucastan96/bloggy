@@ -1,14 +1,54 @@
 <?php
 session_start();
 
+if (isset($_SESSION['first_login'])) {
+    $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Thank you for signing up for Bloggy!<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+    $_SESSION['first_login'] = null;
+} else if (isset($_SESSION['postAdded'])) {
+    $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your post has been published.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+    $_SESSION['postAdded'] = null;
+}
+
 require_once 'includes/connection.php';
 require_once 'includes/checkinactivity.php';
 
-$query = "SELECT * FROM post ORDER BY post_id DESC";
+$get_page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_URL);
+
+$query = "SELECT COUNT(*) FROM post";
 $statement = $db->prepare($query);
 $statement->execute();
-$result_array = $statement->fetchAll();
+$result_array = $statement->fetch(PDO::FETCH_NUM);
+$post_count = $result_array[0];
 $statement->closeCursor();
+
+if ($get_page == "" || $get_page == 1) {
+    $older = 2;
+    $newer = 0;
+
+    $query = "SELECT * FROM post ORDER BY post_id DESC LIMIT 5";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result_array = $statement->fetchAll();
+    $statement->closeCursor();
+} else {
+    $page = $get_page * 5;
+    $older = $get_page + 1;
+    $newer = $get_page - 1;
+
+    if (($older * 5 - 4) > $post_count) {
+	$older = -1;
+    }
+
+    if ($page == 10) {
+	$page = $page - 5;
+    }
+
+    $query = "SELECT * FROM post ORDER BY post_id DESC LIMIT 5,$page";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result_array = $statement->fetchAll();
+    $statement->closeCursor();
+}
 
 function truncate($text, $chars = 25) {
     $text = $text . " ";
@@ -32,6 +72,11 @@ function truncate($text, $chars = 25) {
             <div class="row">
 		<?php if (!empty($result_array)) { ?>
     		<div class="col-sm-8 posts">
+			<?php
+			if (isset($message)) {
+			    echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
+			}
+			?>
 			<?php
 			foreach ($result_array as $result):
 			    $author_id = $result['member_id'];
@@ -81,7 +126,7 @@ function truncate($text, $chars = 25) {
 						    $comment_count = $result_array3[0];
 						    $statement3->closeCursor();
 						    ?>
-	    					<div class='post-votes-count' title='0 Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>0</div>
+	    					<div class='post-votes-count' title='<?php echo htmlspecialchars($result["post_like"]); ?> Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i><?php echo htmlspecialchars($result["post_like"]); ?></div>
 	    					<div class='post-comments-count' title='<?php echo $comment_count; ?> Comment(s)'><i class="fa fa-comments margin-true" aria-hidden="true"></i><?php echo $comment_count; ?></div>
 	    				    </div>
 	    				</div>
@@ -97,6 +142,12 @@ function truncate($text, $chars = 25) {
 			    endforeach;
 			endforeach;
 			?>
+			<?php if ($older != -1) { ?>
+			    <a href="index?page=<?php echo $older; ?>" role="button" class="btn btn-default no-border older"><i class="fa fa-arrow-circle-left margin-true" aria-hidden="true"></i>Older Posts</a>
+			<?php } ?> 
+			<?php if ($newer != 0) { ?>
+			    <a href="index?page=<?php echo $newer; ?>" role="button" class="btn btn-default no-border newer"><i class="fa fa-arrow-circle-right margin-true" aria-hidden="true"></i>Newer Posts</a>
+			<?php } ?>
     		</div>
 		<?php } else {
 		    ?>
@@ -123,7 +174,9 @@ function truncate($text, $chars = 25) {
 	    $(".left:nth-child(1)").addClass("active");
 	    $(".post").delay(100).animate({opacity: 1}, 300);
 	    $(".sidebar").delay(200).animate({opacity: 1}, 300);
-	    $('[data-toggle="tooltip"]').tooltip();
+	    $("#message").click(function () {
+		$("#message").fadeOut();
+	    });
 	});
     </script>
 </body>

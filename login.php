@@ -4,6 +4,16 @@ session_start();
 if (isset($_SESSION['login_user'])) {
     header("Location: index");
     exit();
+} else {
+    if (!isset($login_message)) {
+	$email = "";
+    }
+    if (!isset($register_message)) {
+	$register_email = "";
+	$firstname = "";
+	$lastname = "";
+	$age = "";
+    }
 }
 
 require_once 'includes/connection.php';
@@ -34,14 +44,14 @@ $statement->closeCursor();
 		<div class="col-sm-6">
 		    <div class='login-box'>
 			<h3>Sign In</h3>
-			<form action="includes/loginprocess" method="post">
+			<form action="loginprocess" method="post">
 			    <?php
 			    if (isset($login_message)) {
 				echo "<div id='message' title='Click to Dismiss'>" . $login_message . "</div>";
 			    }
 			    ?>
 			    <label for="inputEmail" class="sr-only">Email</label>
-			    <input type="email" name="email" id="username" class="form-control no-border input" placeholder="Email" required autofocus>
+			    <input type="email" name="email" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $email; ?>' required autofocus>
 			    <label for="inputPassword" class="sr-only">Password</label>
 			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required>
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
@@ -51,20 +61,20 @@ $statement->closeCursor();
 		<div class="col-sm-6">
 		    <div class='register-box'>
 			<h3>Register</h3>
-			<form action="includes/registerprocess" method="post">
+			<form action="registerprocess" method="post">
 			    <?php
 			    if (isset($register_message)) {
 				echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
 			    }
 			    ?>
 			    <label for="registeremail" class="sr-only">Email</label>
-			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" required autofocus>
+			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $register_email; ?>' required>
 			    <label for="yourFirstName" class="sr-only">First Name</label>
-			    <input type="text" name="yourFirstName" id="firstname" class="form-control no-border input" placeholder="First Name" required>
+			    <input type="text" name="yourFirstName" id="firstname" class="form-control no-border input" placeholder="First Name" value='<?php echo $firstname; ?>' required>
 			    <label for="yourLastName" class="sr-only">Last Name</label>
-			    <input type="text" name="yourLastName" id="lastname" class="form-control no-border input" placeholder="Last Name" required>
+			    <input type="text" name="yourLastName" id="lastname" class="form-control no-border input" placeholder="Last Name" value='<?php echo $lastname; ?>' required>
 			    <label for="yourAge" class="sr-only">Age</label>
-			    <input type="text" name="yourAge" id="age" class="form-control no-border input" placeholder="Age" required>
+			    <input type="number" name="yourAge" id="age" class="form-control no-border input" placeholder="Age" value='<?php echo $age; ?>' required>
 			    <label for="yourCountry" class="sr-only">Country</label>
 			    <select class="form-control no-border input" id="category" name="yourCountry" required>
 				<option value="" selected="selected">Select a Country</option>
@@ -86,13 +96,16 @@ $statement->closeCursor();
 	<?php include("Includes/footer.php"); ?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>');</script>
+	<script>window.jQuery || document.write('<script src = "../../assets/js/vendor/jquery.min.js"><\/script>');</script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script>
 	    $(document).ready(function () {
 		$(".right:nth-child(1)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
 		$(".login-box, .register-box").delay(200).animate({opacity: 1}, 300);
+		$("#message").click(function () {
+		    $("#message").fadeOut();
+		});
 	    });
 	</script>
     </body>

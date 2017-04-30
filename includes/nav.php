@@ -2,13 +2,17 @@
 if (isset($_SESSION['login_user'])) {
     $id = $_SESSION['id'];
 
-    $query = "SELECT first_name FROM member_details WHERE member_id = :id";
+    $query = "SELECT first_name, profile_pic FROM member_details WHERE member_id = :id";
     $statement = $db->prepare($query);
     $statement->bindValue(":id", $id);
     $statement->execute();
-    $nav_array = $statement->fetch();
-    $name = $nav_array['first_name'];
+    $nav_array = $statement->fetchAll();
     $statement->closeCursor();
+
+    foreach ($nav_array as $nav_data):
+	$nav_name = $nav_data["first_name"];
+	$nav_profile_pic = $nav_data["profile_pic"];
+    endforeach;
 }
 ?>
 <nav class="navbar">
@@ -28,7 +32,7 @@ if (isset($_SESSION['login_user'])) {
 		<li class='left'><a href="writers"><i class="fa fa-pencil fa-fw margin-true" aria-hidden="true"></i>Writers</a></li>
 		<li class='left'><a href="about"><i class="fa fa-info-circle fa-fw margin-true" aria-hidden="true"></i>About</a></li>
 		<?php if (isset($_SESSION['login_user'])) { ?>
-    		<li class='left'><a href="profile"><i class="fa fa-user fa-fw margin-true" aria-hidden="true"></i><?php echo htmlspecialchars($name); ?></a></li>
+    		<li class='left'><a href="profile"><img class="navbar-pic" src="images/profiles/<?php echo htmlspecialchars($nav_profile_pic); ?>" alt="Profile Picture"><?php echo htmlspecialchars($nav_name); ?></a></li>
 		<?php } ?>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">

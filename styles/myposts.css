@@ -1,0 +1,23 @@
+.post {
+    padding-bottom: 0;
+}
+
+.post:nth-child(1) {
+    padding-bottom: 15px;
+}
+
+.post h2 i {
+    margin-right: 15px;
+}
+
+.post-image {
+    object-fit: cover;
+    max-height: 100px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.post-actions {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}

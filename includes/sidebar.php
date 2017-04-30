@@ -1,12 +1,37 @@
+<?php
+$date = new DateTime();
+$format_date = $date->format('Y-m-d');
+
+$sidebar_query = "SELECT COUNT(*) FROM post WHERE post_date LIKE '%$format_date%'";
+$statement = $db->prepare($sidebar_query);
+$statement->execute();
+$sidebar_result_array = $statement->fetch(PDO::FETCH_NUM);
+$post_count = $sidebar_result_array[0];
+$statement->closeCursor();
+
+$sidebar_query2 = "SELECT post_id, post_title, post_like, post_image FROM post ORDER BY post_like DESC LIMIT 5";
+$statement2 = $db->prepare($sidebar_query2);
+$statement2->execute();
+$sidebar_result_array2 = $statement2->fetchAll();
+$statement2->closeCursor();
+?>
 <div class="col-sm-4">
     <?php
     if (isset($_SESSION['user_status'])) {
 	if ($_SESSION['user_status'] == 1 || $_SESSION['user_status'] == 2) {
 	    ?>
 	    <div class="writer-tools sidebar">
+		<?php
+		if ($_SESSION['user_status'] == 1) { ?>
 		<h3><i class="fa fa-wrench margin-true" aria-hidden="true"></i>Writer Tools</h3>
-		<a href="addpost" role="button" class="btn btn-default no-border">Create Post</a>
-		<a href="viewposts" role="button" class="btn btn-default no-border">View My Posts</a>
+		<?php } else { ?>
+		<h3><i class="fa fa-wrench margin-true" aria-hidden="true"></i>Admin Tools</h3>
+		<?php } ?>
+		<a href="addpost" role="button" class="btn btn-default no-border"><i class="fa fa-pencil margin-true" aria-hidden="true"></i>Create Post</a>
+		<a href="myposts" role="button" class="btn btn-default no-border"><i class="fa fa-pencil-square-o margin-true" aria-hidden="true"></i>My Posts</a>
+		<?php if ($_SESSION['user_status'] == 2) { ?>
+	    	<a href="manage" role="button" class="btn btn-default no-border"><i class="fa fa-users margin-true" aria-hidden="true"></i>Manage Users</a>
+		<?php } ?>
 	    </div>
 	    <?php
 	}
@@ -14,55 +39,39 @@
     ?>
     <div class="post-today sidebar">
 	<h3><i class="fa fa-heart margin-true" aria-hidden="true"></i>Howdy!</h3>
-	<p>We have <strong>2 new articles</strong> for you today. Enjoy!</p>
+	<?php if ($post_count == 0) { ?>
+    	<p>We don't have any new articles for you yet today. Check back soon!</p>
+	<?php } else { ?>
+    	<p>We have <strong><?php echo htmlspecialchars($post_count); ?> new articles</strong> for you today. Enjoy!</p>
+	<?php } ?>
     </div>
     <div class="post-trending sidebar">
-	<h3><i class="fa fa-fire margin-true" aria-hidden="true"></i>Trending</h3>
-	<div class='post-trending-content'>
-	    <img src="images/uploads/love_you_alvin.jpeg" alt="Love You Alvin Photo">
-	    <div class='post-trending-title'><a href=''>Love You Alvin, Yeah I Really Do!</a></div>
-	    <div class='post-trending-stats'>
-		<i class="fa fa-eye" aria-hidden="true"></i>540
-		<i class="fa fa-thumbs-up " aria-hidden="true"></i>103
-		<i class="fa fa-comments" aria-hidden="true"></i>37
-	    </div>
-	</div>
-	<div class='post-trending-content'>
-	    <img src="images/uploads/hello_world.jpg" alt="Hello World Photo">
-	    <div class='post-trending-title'><a href=''>Hello World, We Are Bloggy!</a></div>
-	    <div class='post-trending-stats'>
-		<i class="fa fa-eye" aria-hidden="true"></i>943
-		<i class="fa fa-thumbs-up" aria-hidden="true"></i>482
-		<i class="fa fa-comments" aria-hidden="true"></i>88
-	    </div>
-	</div>
-	<div class='post-trending-content'>
-	    <img src="images/uploads/hello_world.jpg" alt="Hello World Photo">
-	    <div class='post-trending-title'><a href=''>Hello World, We Are Bloggy!</a></div>
-	    <div class='post-trending-stats'>
-		<i class="fa fa-eye" aria-hidden="true"></i>943
-		<i class="fa fa-thumbs-up" aria-hidden="true"></i>482
-		<i class="fa fa-comments" aria-hidden="true"></i>88
-	    </div>
-	</div>
-	<div class='post-trending-content'>
-	    <img src="images/uploads/hello_world.jpg" alt="Hello World Photo">
-	    <div class='post-trending-title'><a href=''>Hello World, We Are Bloggy!</a></div>
-	    <div class='post-trending-stats'>
-		<i class="fa fa-eye" aria-hidden="true"></i>943
-		<i class="fa fa-thumbs-up" aria-hidden="true"></i>482
-		<i class="fa fa-comments" aria-hidden="true"></i>88
-	    </div>
-	</div>
-	<div class='post-trending-content'>
-	    <img src="images/uploads/hello_world.jpg" alt="Hello World Photo">
-	    <div class='post-trending-title'><a href=''>Hello World, We Are Bloggy!</a></div>
-	    <div class='post-trending-stats'>
-		<i class="fa fa-eye" aria-hidden="true"></i>943
-		<i class="fa fa-thumbs-up" aria-hidden="true"></i>482
-		<i class="fa fa-comments" aria-hidden="true"></i>88
-	    </div>
-	</div>
+	<h3><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>Most Likes</h3>
+	<p>Below are the posts with the most likes.</p>
+	<?php foreach ($sidebar_result_array2 as $result): ?>
+    	<div class='post-trending-content'>
+		<?php if ($result["post_image"] != "") { ?>
+		    <a href="post?id=<?php echo htmlspecialchars($result["post_id"]); ?>"><img src="images/uploads/<?php echo htmlspecialchars($result["post_image"]); ?>" alt="Post Photo" title="<?php echo htmlspecialchars($result["post_title"]); ?>"></a>
+		<?php } else { ?>
+		    <a href="post?id=<?php echo htmlspecialchars($result["post_id"]); ?>" title="<?php echo htmlspecialchars($result["post_title"]); ?>"><div class="image-placeholder"></div></a>
+		<?php } ?>
+    	    <div class='post-trending-title'><a href='post?id=<?php echo htmlspecialchars($result["post_id"]); ?>'><?php echo htmlspecialchars($result["post_title"]); ?></a></div>
+		<?php
+		$sidebar_query3 = "SELECT COUNT(*) FROM comment WHERE post_id = :post_id";
+		$statement3 = $db->prepare($sidebar_query3);
+		$statement3->bindValue("post_id", $result["post_id"]);
+		$statement3->execute();
+		$sidebar_result_array3 = $statement3->fetch(PDO::FETCH_NUM);
+		$comment_count = $sidebar_result_array3[0];
+		$statement3->closeCursor();
+		?>
+    	    <div class='post-trending-stats'>
+    		<i class="fa fa-thumbs-up " aria-hidden="true"></i><?php echo htmlspecialchars($result["post_like"]); ?>
+    		<i class="fa fa-comments" aria-hidden="true"></i><?php echo htmlspecialchars($comment_count); ?>
+    	    </div>
+    	</div>
+	<?php endforeach;
+	?>
     </div>
     <div class="social sidebar">
 	<h3><i class="fa fa-plus-circle margin-true" aria-hidden="true"></i>Follow Us!</h3>

@@ -18,14 +18,10 @@ if ($post_id == "") {
     $statement->closeCursor();
 
     foreach ($result_array as $result):
-	$post_title = $result["post_title"];
-	$post_content = $result["post_content"];
-	$post_image = $result["post_image"];
-	$post_date = $result["post_date"];
-	$post_tags = $result["post_tags"];
-	$post_like = $result["post_like"];
 	$allow_comments = $result["allow_comments"];
+	$post_title = $result["post_title"];
 	$author_id = $result['member_id'];
+	$post_likers = $result['post_likers'];
     endforeach;
 
     $query3 = "SELECT * FROM comment WHERE post_id = :post_id ORDER BY comment_id DESC";
@@ -74,8 +70,17 @@ if ($post_id == "") {
 	    				</div>
 	    				<div class="col-sm-2">
 	    				    <div class='post-stats'>
-	    					<div class='post-votes-count' title='103 Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i>0</div>
-	    					<div class='post-comments-count' title='<?php echo sizeof($result_array3); ?> Comment(s)'><i class="fa fa-comments margin-true" aria-hidden="true"></i><?php echo sizeof($result_array3); ?></div>
+						    <?php
+						    $query4 = "SELECT COUNT(*) FROM comment WHERE post_id = :post_id";
+						    $statement4 = $db->prepare($query4);
+						    $statement4->bindValue(":post_id", $post_id);
+						    $statement4->execute();
+						    $result_array4 = $statement4->fetch(PDO::FETCH_NUM);
+						    $comment_count = $result_array4[0];
+						    $statement4->closeCursor();
+						    ?>
+	    					<div class='post-votes-count' title='<?php echo htmlspecialchars($result["post_like"]); ?> Like(s)'><i class="fa fa-thumbs-up margin-true" aria-hidden="true"></i><?php echo htmlspecialchars($result["post_like"]); ?></div>
+	    					<div class='post-comments-count' title='<?php echo $comment_count; ?> Comment(s)'><i class="fa fa-comments margin-true" aria-hidden="true"></i><?php echo $comment_count; ?></div>
 	    				    </div>
 	    				</div>
 	    			    </div>
@@ -83,7 +88,7 @@ if ($post_id == "") {
 				    <?php if ($result['post_image'] != "") { ?>
 					<img class='post-image' src="images/uploads/<?php echo htmlspecialchars($result['post_image']); ?>" alt="Post Photo">
 				    <?php } ?>
-	    			<p class='post-content'><?php echo htmlspecialchars($result['post_content']); ?></p>
+	    			<p class='post-content'><?php echo nl2br(htmlspecialchars($result['post_content'])); ?></p>
 	    			<div class='post-tags'>
 	    			    <strong>Tags:</strong>&nbsp;&nbsp;
 					<?php
@@ -94,9 +99,34 @@ if ($post_id == "") {
 	    			    &nbsp;
 	    			    &nbsp;
 	    			</div>
-				<div class="post-likes">
-				    
-				</div>
+	    			<div class="post-likes">
+					<?php if (isset($_SESSION['login_user'])) { ?>
+					    <form action='includes/likepost' method="post">
+						<input type="hidden" name="member_id" value="<?php echo $_SESSION['id']; ?>">
+						<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+						<?php
+						$post_likers_array = explode(",", $post_likers);
+						$like_status = 0;
+
+						for ($i = 0; $i < sizeof($post_likers_array); $i++) {
+						    if ($post_likers_array[$i] == $_SESSION['id']) {
+							$like_status = 1;
+						    }
+						}
+
+						if ($like_status == 0) {
+						    ?>
+		    				<button type = "submit" class = "btn btn-default no-border"><i class = "fa fa-thumbs-o-up margin-true" aria-hidden = "true"></i>Like</button>
+						<?php } else { ?>
+		    				<button type = "submit" class = "btn btn-default no-border"><i class = "fa fa-thumbs-o-down margin-true" aria-hidden = "true"></i>Unlike</button>
+						<?php } ?>
+					    </form>
+					    <?php
+					} else {
+					    ?>
+					    <p><a href="login">Sign in or register</a> to like this post!</p>
+					<?php } ?>
+	    			</div>
 	    		    </div>
 				<?php
 			    endforeach;
@@ -112,7 +142,7 @@ if ($post_id == "") {
 				    ?>
 				    <form action="includes/addcommentprocess" method="post">
 					<div class="input-group">
-					    <input type="text" class="form-control no-border search" placeholder="Post a comment as <?php echo htmlspecialchars($name); ?>" name="comment_text">
+					    <input type="text" class="form-control no-border search" placeholder="Post a comment as <?php echo htmlspecialchars($nav_name); ?>" name="comment_text" required>
 					    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post_id); ?>">
 					    <span class="input-group-btn">
 						<button class="btn btn-default no-border search" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -134,17 +164,17 @@ if ($post_id == "") {
 					$comment_date = $results["comment_date"];
 					$comment_member_id = $results["member_id"];
 
-					$query4 = "SELECT first_name, last_name, profile_pic FROM member_details WHERE member_id = :member_id";
-					$statement4 = $db->prepare($query4);
-					$statement4->bindValue(":member_id", $author_id);
-					$statement4->execute();
-					$result_array4 = $statement4->fetch();
-					$statement4->closeCursor();
+					$query5 = "SELECT first_name, last_name, profile_pic FROM member_details WHERE member_id = :member_id";
+					$statement5 = $db->prepare($query5);
+					$statement5->bindValue(":member_id", $comment_member_id);
+					$statement5->execute();
+					$result_array5 = $statement5->fetchAll();
+					$statement5->closeCursor();
 
-					foreach ($result_array4 as $results):
-					    $member_first_name = $result_array4["first_name"];
-					    $member_last_name = $result_array4["last_name"];
-					    $member_profile_pic = $result_array4["profile_pic"];
+					foreach ($result_array5 as $results):
+					    $member_first_name = $results["first_name"];
+					    $member_last_name = $results["last_name"];
+					    $member_profile_pic = $results["profile_pic"];
 					endforeach;
 					?>
 	    			    <div class="comment">
@@ -179,7 +209,6 @@ if ($post_id == "") {
 		$(".left:nth-child(1)").addClass("active");
 		$(".post").delay(100).animate({opacity: 1}, 300);
 		$(".sidebar").delay(200).animate({opacity: 1}, 300);
-		$('[data-toggle="tooltip"]').tooltip();
 	    });
 	</script>
     </body>

@@ -19,7 +19,7 @@ if ($search != "") {
     $result_array2 = $statement2->fetchAll();
     $statement2->closeCursor();
 
-    $query3 = "SELECT post_id, post_title, post_date, member_id FROM post WHERE post_tags LIKE '%$search%' ORDER BY post_id DESC";
+    $query3 = "SELECT post_tags FROM post WHERE post_tags LIKE '%$search%'";
     $statement3 = $db->prepare($query3);
     $statement3->execute();
     $result_array3 = $statement3->fetchAll();
@@ -116,31 +116,27 @@ if ($search != "") {
 			<?php if (!empty($result_array3)) { ?>
 			    <div class="post" id="search-tag">
 				<h4><i class="fa fa-tags fa-fw margin-true" aria-hidden="true"></i>Tag Search</h4>
-				<?php
+				<div class='post-tags'>
+				    <?php
+				$get_tags = "";
+
 				foreach ($result_array3 as $result):
-				    $author_id = $result["member_id"];
+				    $get_tags = $get_tags . "," . $result["post_tags"];
+				endforeach;
 
-				    $query5 = "SELECT first_name, last_name, profile_pic FROM member_details WHERE member_id=:member_id";
-				    $statement5 = $db->prepare($query5);
-				    $statement5->bindValue(":member_id", $author_id);
-				    $statement5->execute();
-				    $result_array5 = $statement5->fetchAll();
-				    $statement5->closeCursor();
+				$tags = substr($get_tags, 1);
+				$tags_array = explode(",", $tags);
+				$unique_tags_array = array_unique($tags_array, SORT_REGULAR);
 
-				    foreach ($result_array5 as $result2):
+				foreach ($unique_tags_array as $tags):
+				    if (stristr($tags, $search)) {
 					?>
-
-					<div class='post-details'>
-					    <h3 class='post-title'><a href="post?id=<?php echo htmlspecialchars($result['post_id']); ?>"><?php echo htmlspecialchars($result['post_title']); ?></a></h3>
-					    <a href = 'member?id=<?php echo htmlspecialchars($result['member_id']); ?>' title = '<?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']); ?>'><img class = "post-author-pic" src = "images/profiles/<?php echo htmlspecialchars($result2['profile_pic']); ?>" alt = "<?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']); ?> Photo"></a>
-					    <div class = "post-author-name"><a href = 'member?id=<?php echo htmlspecialchars($result['member_id']); ?>'><?php echo htmlspecialchars($result2['first_name'] . " " . $result2['last_name']);
-					?></a></div>
-					    <div class='post-date'><i class="fa fa-clock-o margin-true" aria-hidden="true"></i>Published on <?php echo htmlspecialchars($result['post_date']); ?></div>
-					</div>
+					<span><a href='tag?name=<?php echo $tags; ?>'><?php echo $tags; ?></a></span>
 					<?php
-				    endforeach;
+				    }
 				endforeach;
 				?>
+				</div>
 			    </div>
 			<?php } else {
 			    ?>

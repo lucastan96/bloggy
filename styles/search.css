@@ -13,6 +13,7 @@
 .search-nav {
     margin-top: 25px;
     margin-bottom: 10px;
+    line-height: 40px;
 }
 
 .search-nav div, .search-nav a {
@@ -38,4 +39,8 @@
 
 .post-author-name {
     margin-top: 18px;
+}
+
+.post-tags {
+    line-height: 30px;
 }

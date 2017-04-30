@@ -14,8 +14,18 @@ require_once 'includes/checkinactivity.php';
     <body>
 	<?php include("Includes/nav.php"); ?>
 
+	<div class="banner">
+	    <h2>About Bloggy</h2>
+	    <p>What is Bloggy and why is it created?</p>
+	</div>
+
 	<div class='container main-content'>
-	    
+	    <div class="about-content">
+		<h2><span>Bloggy</span> is a College Project!</h2>
+		<h3>This website is made by Lucas & Alvin, students from Dundalk Institute of Technology, Dundalk, Ireland. This website is our final 2nd year assignment for Web Programming!</h3>
+		<h3>We had a great time finishing this site!</h3>
+		<img class="er-diagram" src="images/erdiagram.png" alt="ER Diagram">
+	    </div>
 	</div>
 
 	<?php include("Includes/footer.php"); ?>
@@ -26,7 +36,8 @@ require_once 'includes/checkinactivity.php';
 	<script>
 	    $(document).ready(function () {
 		$(".left:nth-child(3)").addClass("active");
-		$(".container").delay(200).animate({opacity: 1}, 300);
+		$(".banner").delay(100).animate({opacity: 1}, 300);
+		$(".about-content").delay(200).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>

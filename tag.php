@@ -31,7 +31,7 @@ if ($tag_name == "") {
             <div class="row">
 		<div class="col-sm-8 posts">
 		    <div class='post'>
-			<h2>Posts with Tag "<?php echo htmlspecialchars($tag_name); ?>"</h2>
+			<h2><i class="fa fa-tag" aria-hidden="true"></i>Posts with Tag "<?php echo htmlspecialchars($tag_name); ?>"</h2>
 		    </div>
 		    <?php
 		    if (!empty($result_array)) {
@@ -81,7 +81,6 @@ if ($tag_name == "") {
 	    $(".left:nth-child(1)").addClass("active");
 	    $(".post").delay(100).animate({opacity: 1}, 300);
 	    $(".sidebar").delay(200).animate({opacity: 1}, 300);
-	    $('[data-toggle="tooltip"]').tooltip();
 	});
     </script>
 </body>

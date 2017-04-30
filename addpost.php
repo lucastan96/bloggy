@@ -10,6 +10,13 @@ if (!isset($_SESSION['login_user'])) {
 } else {
     if ($_SESSION['user_status'] != 1 && $_SESSION['user_status'] != 2) {
 	header("Location: index");
+	exit();
+    }
+    
+    if (!isset($message)) {
+	$post_title = "";
+	$post_content = "";
+	$post_tags = "";
     }
 }
 ?>
@@ -30,7 +37,12 @@ if (!isset($_SESSION['login_user'])) {
 	</div>
 
 	<div class='container main-content'>
-	    <form action="includes/addpostprocess" method="post" enctype="multipart/form-data">
+	    <?php
+	    if (isset($message)) {
+		echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
+	    }
+	    ?>
+	    <form action="addpostprocess" method="post" enctype="multipart/form-data">
 		<?php
 		if (isset($register_message)) {
 		    echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
@@ -39,15 +51,15 @@ if (!isset($_SESSION['login_user'])) {
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="post_title">Title:</label>
 		    <div class="col-sm-10">
-			<input type="text" class="form-control input no-border" name="post_title" maxlength="100" placeholder="Enter post title" required autofocus>
+			<input type="text" class="form-control input no-border" name="post_title" maxlength="100" placeholder="Enter post title" value="<?php echo $post_title; ?>" required autofocus>
 		    </div>
 		    <label class="control-label col-sm-2" for="post_content">Content:</label>
 		    <div class="col-sm-10"> 
-			<textarea class="form-control no-border" rows="20" maxlength="5000" name="post_content" id="letter" placeholder="Type your post. The maximum number of characters allowed is 5000." required></textarea>
+			<textarea class="form-control no-border" rows="20" maxlength="5000" name="post_content" id="letter" placeholder="Type your post. The maximum number of characters allowed is 5000." required><?php echo $post_content; ?></textarea>
 		    </div>
 		    <label class="control-label col-sm-2" for="post_tags">Tags:</label>
 		    <div class="col-sm-10">
-			<input type="text" class="form-control input no-border" name="post_tags" placeholder="Enter post tags, please separate tags using commas (,)." required>
+			<input type="text" class="form-control input no-border" name="post_tags" placeholder="Enter at least 1 post tag, please separate tags using commas (,)." value="<?php echo $post_tags; ?>" required>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -56,7 +68,7 @@ if (!isset($_SESSION['login_user'])) {
 			<div class="fileinput fileinput-new" data-provides="fileinput">
 			    <div class="fileinput-preview thumbnail no-border" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
 			    <div>
-				<span class="btn btn-default btn-file no-border"><span class="fileinput-new">Choose Picture</span><span class="fileinput-exists">Change</span><input type="file" name="picture"></span>
+				<span class="btn btn-default btn-file no-border"><span class="fileinput-new">Choose Picture (Optional)</span><span class="fileinput-exists">Change</span><input type="file" name="picture"></span>
 				<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
 			    </div>
 			</div>
@@ -65,12 +77,13 @@ if (!isset($_SESSION['login_user'])) {
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="allow_comments">Comments:</label>
 		    <div class="col-sm-10 checkbox">
-			<label class="radio-inline"><input type="radio" name="allow_comments" value="1" checked>Yes</label>
+			<label class="radio-inline"><input type="radio" name="allow_comments" value="1" checked>Yes (Default)</label>
 			<label class="radio-inline"><input type="radio" name="allow_comments" value="0">No</label>
 		    </div>
 		</div>
 		<div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
+			<input type="hidden" name="member_id" value="<?php echo htmlspecialchars($_SESSION["id"]); ?>">
 			<button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 		    </div>
 		</div>

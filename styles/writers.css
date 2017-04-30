@@ -23,46 +23,26 @@
     margin-bottom: 60px;
 }
 
-.profile-details {
+.writer {
     background: white;
     border: 1.5px solid #e6e6e6;
     border-radius: 4px;
     padding: 20px;
     padding-top: 50px;
     padding-bottom: 50px;
-    text-align: center;
     opacity: 0;
     margin-bottom: 20px;
-}
-
-.profile-pic {
     text-align: center;
 }
 
-#file {
-    visibility: hidden;
-    display: none;
-}
-
-.profile-pic-update {
-    margin-top: 10px;
-}
-
-.profile-pic img {
-    width: 180px;
-    height: 180px;
+.writer-pic img {
+    width: 200px;
+    height: 200px;
+    border-radius: 300px;
     object-fit: cover;
-    border-radius: 200px;
 }
 
-.profile-name {
-    font-weight: bold;
-    font-size: 28px;
-    margin-bottom: 5px;
-    margin-top: 30px;
-}
-
-.profile-status span {
+.writer-status span {
     background: red;
     color: white;
     font-weight: bold;
@@ -73,11 +53,10 @@
     padding-right: 8px;
 }
 
-.profile-settings {
-    border-top: 1.5px solid #cccccc;
+.writer-details {
     margin-top: 40px;
-    padding-top: 30px;
-    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -90,26 +69,22 @@
 	padding-top: 100px;
     }
 
-    .profile-details {
-	padding: 50px;
+    .writer {
 	text-align: left;
     }
 
-    .profile-pic {
-	text-align: right;
-    }
-
-    .profile-pic-update {
+    .writer-pic img {
+	width: 250px;
+	height: 250px;
 	float: right;
-	margin-right: 21px;
+	margin-right: 15px;
     }
 
-    .profile-pic img {
-	width: 200px;
-	height: 200px;
+    .writer h2 {
+	margin-top: 35px;
     }
-
-    .profile-name {
-	margin-top: 60px;
+    
+    .writer h2, .writer-status, .writer-details {
+	margin-left: 15px;
     }
 }
