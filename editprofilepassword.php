@@ -7,6 +7,15 @@ if ($request_method == 'POST') {
 
     $currentpassword = filter_input(INPUT_POST, 'currentpassword', FILTER_SANITIZE_STRING);
     $newpassword = filter_input(INPUT_POST, 'newpassword', FILTER_SANITIZE_STRING);
+    
+    $regex_password = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
+    
+    if (!preg_match($regex_password, $newpassword)) {
+            $register_message = "<i class='fa fa-info-circle' aria-hidden='true'></i>The password is wrong.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            header("Location: login");
+            exit();
+     }
+     
     $confirmpassword = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 

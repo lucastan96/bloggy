@@ -88,6 +88,8 @@ function truncate($text, $chars = 25) {
 			    $statement2->execute();
 			    $result_array2 = $statement2->fetchAll();
 			    $statement2->closeCursor();
+                            
+                                                        
 
 			    foreach ($result_array2 as $result2):
 				$tags_array = explode(",", $result["post_tags"]);

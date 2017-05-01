@@ -167,7 +167,7 @@ $statement5->closeCursor();
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="email">Email:</label>
                             <div class="col-sm-11">
-                                <input type="text" class="form-control no-border input" name="email" value="<?php echo htmlspecialchars($email); ?>" title="Not Changeable" disabled>
+                                <input type="text" class="form-control no-border input" name="email" value="<?php echo htmlspecialchars($email); ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Please enter your email" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -179,13 +179,13 @@ $statement5->closeCursor();
 			<div class="form-group">
                             <label class="control-label col-sm-1" for="newpassword">New Password:</label>
                             <div class="col-sm-11">
-                                <input type="password" class="form-control no-border input" name="newpassword" placeholder="Enter your new password" required>
+                                <input type="password" class="form-control no-border input" name="newpassword" placeholder="Enter your new password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="confirmpassword">Confirm Password:</label>
                             <div class="col-sm-11">
-                                <input type="password" class="form-control no-border input" name="confirmpassword" placeholder="Confirm your new password" required>
+                                <input type="password" class="form-control no-border input" name="confirmpassword" placeholder="Confirm your new password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                             </div>
                         </div>
 			<input type='hidden' name='email' value='<?php echo $email; ?>'>

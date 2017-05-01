@@ -51,9 +51,9 @@ $statement->closeCursor();
 			    }
 			    ?>
 			    <label for="inputEmail" class="sr-only">Email</label>
-			    <input type="email" name="email" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $email; ?>' required autofocus>
+			    <input type="email" name="email" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $email; ?>' required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Please enter your email">
 			    <label for="inputPassword" class="sr-only">Password</label>
-			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required>
+			    <input type="password" name="password" id="password" class="form-control no-border input" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 			</form>
 		    </div>
@@ -68,7 +68,7 @@ $statement->closeCursor();
 			    }
 			    ?>
 			    <label for="registeremail" class="sr-only">Email</label>
-			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $register_email; ?>' required>
+			    <input type="email" name="registeremail" id="username" class="form-control no-border input" placeholder="Email" value='<?php echo $register_email; ?>' required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Please enter your email">
 			    <label for="yourFirstName" class="sr-only">First Name</label>
 			    <input type="text" name="yourFirstName" id="firstname" class="form-control no-border input" placeholder="First Name" value='<?php echo $firstname; ?>' required>
 			    <label for="yourLastName" class="sr-only">Last Name</label>
@@ -83,9 +83,9 @@ $statement->closeCursor();
 				<?php endforeach; ?>
 			    </select>
 			    <label for="inputPassword" class="sr-only">Password</label>
-			    <input type="password" name="registerpassword" id="password" class="form-control no-border input" placeholder="Password" required>
+			    <input type="password" name="registerpassword" id="password" class="form-control no-border input" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 			    <label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
-			    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control no-border input" placeholder="Confirm Password" required>
+			    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control no-border input" placeholder="Confirm Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Please enter the same password">
 			    <button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 			</form>
 		    </div>

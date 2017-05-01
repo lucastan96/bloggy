@@ -4,7 +4,33 @@ $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_S
 
 if ($request_method == 'POST') {
     $register_email = filter_input(INPUT_POST, 'registeremail', FILTER_SANITIZE_EMAIL);
+    $regex_email = "/[a-z]"
+                . "[a-z0-9.-_]*"
+                . "[a-z0-9]+"
+                . "[@]"
+                . "[a-z0-9]+"
+                . "\."
+                . "("
+                . "([a-z]{2}\.[a-z]{2})"
+                . "|"
+                . "[a-z]{2,3})"
+                . "/";
+    
+     if (!preg_match($regex_email, $register_email)) {
+            $register_message = "<i class='fa fa-info-circle' aria-hidden='true'></i>The email doesn't match.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            header("Location: login");
+            exit();
+     }
+    
     $password = filter_input(INPUT_POST, 'registerpassword', FILTER_SANITIZE_STRING);
+    $regex_password = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
+    
+    if (!preg_match($regex_password, $password)) {
+            $register_message = "<i class='fa fa-info-circle' aria-hidden='true'></i>The password is wrong.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            header("Location: login");
+            exit();
+     }
+     
     $confirmpassword = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_STRING);
     $firstname = filter_input(INPUT_POST, 'yourFirstName', FILTER_SANITIZE_STRING);
     $lastname = filter_input(INPUT_POST, 'yourLastName', FILTER_SANITIZE_STRING);
