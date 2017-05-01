@@ -23,6 +23,10 @@
     margin-bottom: 60px;
 }
 
+.main-content a {
+   color: black;
+}
+
 .writer {
     background: white;
     border: 1.5px solid #e6e6e6;

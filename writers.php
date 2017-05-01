@@ -29,12 +29,12 @@ $statement1->closeCursor();
 	    <?php foreach ($result_array1 as $result): ?>
 		<?php
 		$writer_user_status = $result["user_status"];
-		$wrtier_member_id = $result["member_id"];
+		$writer_member_id = $result["member_id"];
 		$writer_email = $result["email"];
-		
+
 		$query2 = "SELECT first_name, last_name, age, country_id, profile_pic FROM member_details WHERE member_id = :member_id";
 		$statement2 = $db->prepare($query2);
-		$statement2->bindValue("member_id", $wrtier_member_id);
+		$statement2->bindValue("member_id", $writer_member_id);
 		$statement2->execute();
 		$result_array2 = $statement2->fetchAll();
 		$statement2->closeCursor();
@@ -46,7 +46,7 @@ $statement1->closeCursor();
 		    $writer_country_id = $result["country_id"];
 		    $writer_profile_pic = $result["profile_pic"];
 		endforeach;
-		
+
 		$query3 = "SELECT country_name FROM countries WHERE country_id = :country_id";
 		$statement3 = $db->prepare($query3);
 		$statement3->bindValue("country_id", $writer_country_id);
@@ -55,31 +55,31 @@ $statement1->closeCursor();
 		$writer_country = $result_array3["country_name"];
 		$statement3->closeCursor();
 		?>
-    	    <div class="writer">
-		<div class="row">
-		    <div class="col-sm-6">
-			<div class="writer-pic"><img src="images/profiles/<?php echo htmlspecialchars($writer_profile_pic); ?>" alt="Profile Picture"></div>
-		    </div>
-		    <div class="col-sm-6">
-			<h2><?php echo htmlspecialchars($writer_first_name) . " " . htmlspecialchars($writer_last_name); ?></h2>
-			<div class='writer-status'>
-			    <?php
-			    if ($writer_user_status == 1) {
-				$user_pos = "Writer";
-			    } else if ($writer_user_status == 2) {
-				$user_pos = "Admin";
-			    }
-			    echo "<span>" . $user_pos . "</span>";
-			    ?>
-                        </div>
-			<div class="writer-details">
-			    <p>Email: <?php echo htmlspecialchars($writer_email); ?></p>
-			    <p>Country: <?php echo htmlspecialchars($writer_country); ?></p>
-			    <p>Age: <?php echo htmlspecialchars($writer_age); ?></p>
-			</div>
-		    </div>
-		</div>
-    	    </div>
+    	    <a href="member?id=<?php echo htmlspecialchars($writer_member_id); ?>"><div class="writer">
+    		    <div class="row">
+    			<div class="col-sm-6">
+    			    <div class="writer-pic"><img src="images/profiles/<?php echo htmlspecialchars($writer_profile_pic); ?>" alt="Profile Picture"></div>
+    			</div>
+    			<div class="col-sm-6">
+    			    <h2><?php echo htmlspecialchars($writer_first_name) . " " . htmlspecialchars($writer_last_name); ?></h2>
+    			    <div class='writer-status'>
+				    <?php
+				    if ($writer_user_status == 1) {
+					$user_pos = "Writer";
+				    } else if ($writer_user_status == 2) {
+					$user_pos = "Admin";
+				    }
+				    echo "<span>" . $user_pos . "</span>";
+				    ?>
+    			    </div>
+    			    <div class="writer-details">
+    				<p>Email: <?php echo htmlspecialchars($writer_email); ?></p>
+    				<p>Country: <?php echo htmlspecialchars($writer_country); ?></p>
+    				<p>Age: <?php echo htmlspecialchars($writer_age); ?></p>
+    			    </div>
+    			</div>
+    		    </div>
+    		</div></a>
 	    <?php endforeach ?>
 	</div>
 
