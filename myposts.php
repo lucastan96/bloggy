@@ -59,8 +59,8 @@ if (!isset($_SESSION['login_user'])) {
                                 <a href="" role="button" class="btn btn-default no-border"><i class="fa fa-pencil margin-true" aria-hidden="true"></i>Edit</a>
                                 <form action="includes/deletepostprocess" method="post">
                                     <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($result["post_id"]); ?>"/>
-                                    <button type="submit" class="btn btn-default no-border"><i class="fa fa-trash margin-true" aria-hidden="true"></i>Delete</button>
-                                </form>		
+                                    <button type="submit" class="btn btn-default no-border" onclick="return confirm('Are you sure you want to delete this post? This action cannot be undone!')"><i class="fa fa-trash margin-true" aria-hidden="true"></i>Delete</button>
+                                </form>
                             </div>
                         </div>
                     <?php endforeach; ?>

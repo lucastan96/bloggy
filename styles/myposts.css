@@ -21,3 +21,8 @@
     margin-top: 20px;
     margin-bottom: 25px;
 }
+
+.post-actions a {
+    float: left;
+    margin-right: 4px;
+}

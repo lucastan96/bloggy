@@ -10,6 +10,10 @@ if ($post_id == "") {
     header("Location: index");
     exit();
 } else {
+    if (isset($_SESSION["commentAdded"])) {
+	$message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your comment has been added.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+    }
+
     $query = "SELECT * FROM post WHERE post_id = :post_id";
     $statement = $db->prepare($query);
     $statement->bindValue(":post_id", $post_id);
@@ -45,6 +49,11 @@ if ($post_id == "") {
         <div class='container main-content'>
             <div class="row">
 		<div class="col-sm-8 posts">
+		    <?php
+		    if (isset($message)) {
+			echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
+		    }
+		    ?>
 		    <?php
 		    if (!empty($result_array)) {
 			foreach ($result_array as $result):
@@ -127,6 +136,15 @@ if ($post_id == "") {
 					    <p><a href="login">Sign in or register</a> to like this post!</p>
 					<?php } ?>
 	    			</div>
+				    <?php if (isset($_SESSION["login_user"]) && $author_id == $_SESSION['id']) { ?>
+					<div class="post-actions">
+					    <a href="" role="button" class="btn btn-default no-border"><i class="fa fa-pencil margin-true" aria-hidden="true"></i>Edit</a>
+					    <form action="includes/deletepostprocess" method="post">
+						<input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post_id); ?>"/>
+						<button type="submit" class="btn btn-default no-border" onclick="return confirm('Are you sure you want to delete this post? This action cannot be undone!')"><i class="fa fa-trash margin-true" aria-hidden="true"></i>Delete</button>
+					    </form>
+					</div>
+				    <?php } ?>
 	    		    </div>
 				<?php
 			    endforeach;
@@ -140,10 +158,11 @@ if ($post_id == "") {
 			    if ($allow_comments == 1) {
 				if (isset($_SESSION['login_user'])) {
 				    ?>
-				    <form action="includes/addcommentprocess" method="post">
+				    <form action="addcommentprocess" method="post">
 					<div class="input-group">
 					    <input type="text" class="form-control no-border search" placeholder="Post a comment as <?php echo htmlspecialchars($nav_name); ?>" name="comment_text" required>
 					    <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post_id); ?>">
+					    <input type="hidden" name="member_id" value="<?php echo htmlspecialchars($_SESSION["id"]); ?>">
 					    <span class="input-group-btn">
 						<button class="btn btn-default no-border search" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 					    </span>
@@ -178,8 +197,8 @@ if ($post_id == "") {
 					endforeach;
 					?>
 	    			    <div class="comment">
-					<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><img class="comment_profile_pic" src="images/profiles/<?php echo htmlspecialchars($member_profile_pic); ?>"></a>
-					<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><div class="comment_name"><?php echo htmlspecialchars($member_first_name) . " " . htmlspecialchars($member_last_name); ?></div></a>
+	    				<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><img class="comment_profile_pic" src="images/profiles/<?php echo htmlspecialchars($member_profile_pic); ?>"></a>
+	    				<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><div class="comment_name"><?php echo htmlspecialchars($member_first_name) . " " . htmlspecialchars($member_last_name); ?></div></a>
 	    				<div class="comment_date">Posted on <?php echo htmlspecialchars($comment_date); ?></div>
 	    				<div class="comment_text"><?php echo htmlspecialchars($comment_text); ?></div>
 	    			    </div>
@@ -205,11 +224,14 @@ if ($post_id == "") {
 	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>');</script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script>
-	    $(document).ready(function () {
-		$(".left:nth-child(1)").addClass("active");
-		$(".post").delay(100).animate({opacity: 1}, 300);
-		$(".sidebar").delay(200).animate({opacity: 1}, 300);
-	    });
+					    $(document).ready(function () {
+						$(".left:nth-child(1)").addClass("active");
+						$(".post").delay(100).animate({opacity: 1}, 300);
+						$(".sidebar").delay(200).animate({opacity: 1}, 300);
+						$("#message").click(function () {
+						    $("#message").fadeOut();
+						});
+					    });
 	</script>
     </body>
 </html>
