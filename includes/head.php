@@ -6,7 +6,7 @@ echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<meta name="description" content="">';
 echo '<meta name="author" content="Lucas Tan, Alvin Teo">';
 echo '<meta name="theme-color" content="#000000">';
-echo '<link rel="icon" href="images/icons/favicon.ico">';
+echo '<link rel="icon" href="images/icons/favicon.ico" type="image/x-icon">';
 echo '<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">';
 echo '<link href="styles/common.css" rel="stylesheet">';
 echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>';
