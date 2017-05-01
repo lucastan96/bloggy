@@ -150,7 +150,7 @@ if ($post_id == "") {
                                     </div>
                                     <?php if (isset($_SESSION["login_user"]) && $author_id == $_SESSION['id']) { ?>
                                         <div class="post-actions">
-                                            <a href="" role="button" class="btn btn-default no-border"><i class="fa fa-pencil margin-true" aria-hidden="true"></i>Edit</a>
+                                            <a href="editpost?id=<?php echo htmlspecialchars($post_id); ?>" role="button" class="btn btn-default no-border"><i class="fa fa-pencil margin-true" aria-hidden="true"></i>Edit</a>
                                             <form action="includes/deletepostprocess" method="post">
                                                 <input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post_id); ?>"/>
                                                 <button type="submit" class="btn btn-default no-border" onclick="return confirm('Are you sure you want to delete this post? This action cannot be undone!')"><i class="fa fa-trash margin-true" aria-hidden="true"></i>Delete</button>
