@@ -37,6 +37,10 @@
     padding: 20px;
 }
 
+.comment a:nth-of-type(2) {
+    color: black;
+}
+
 .comment_profile_pic {
     width: 50px;
     float: left;

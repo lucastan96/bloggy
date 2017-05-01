@@ -178,8 +178,8 @@ if ($post_id == "") {
 					endforeach;
 					?>
 	    			    <div class="comment">
-	    				<img class="comment_profile_pic" src="images/profiles/<?php echo htmlspecialchars($member_profile_pic); ?>">
-	    				<div class="comment_name"><?php echo htmlspecialchars($member_first_name) . " " . htmlspecialchars($member_last_name); ?></div>
+					<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><img class="comment_profile_pic" src="images/profiles/<?php echo htmlspecialchars($member_profile_pic); ?>"></a>
+					<a href="member?id=<?php echo htmlspecialchars($comment_member_id); ?>"><div class="comment_name"><?php echo htmlspecialchars($member_first_name) . " " . htmlspecialchars($member_last_name); ?></div></a>
 	    				<div class="comment_date">Posted on <?php echo htmlspecialchars($comment_date); ?></div>
 	    				<div class="comment_text"><?php echo htmlspecialchars($comment_text); ?></div>
 	    			    </div>

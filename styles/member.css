@@ -1,0 +1,64 @@
+.post {
+    padding-bottom: 20px;
+}
+
+.post:nth-child(1) {
+    padding-bottom: 30px;
+}
+
+.post:nth-child(2) {
+    padding-bottom: 15px;
+}
+
+.post h2 i {
+    margin-right: 15px;
+}
+
+.member-pic {
+    margin-top: 20px;
+}
+
+.member-pic img {
+    object-fit: cover;
+    width: 120px;
+    float: left;
+    margin-right: 20px;
+}
+
+.member-status {
+    padding-top: 2px;
+    padding-bottom: 20px;
+}
+
+.member-status span {
+    background: red;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.member-details {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+.posts a {
+    color: black;
+    text-decoration: none;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+.post-image {
+    object-fit: cover;
+    max-height: 100px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
