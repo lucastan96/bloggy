@@ -18,7 +18,19 @@ if (!isset($_SESSION['login_user'])) {
 	    header("Location: index");
 	    exit();
 	} else {
-	    
+	    $query1 = "SELECT * FROM post WHERE post_id = :post_id";
+	    $statement1 = $db->prepare($query1);
+	    $statement1->bindValue("post_id", $post_id);
+	    $statement1->execute();
+	    $result_array1 = $statement1->fetchAll();
+	    $statement1->closeCursor();
+
+	    foreach ($result_array1 as $result):
+		$post_title = $result["post_title"];
+		$post_content = $result["post_content"];
+		$post_tags = $result["post_tags"];
+		$post_image = $result["post_image"];
+	    endforeach;
 	}
     }
 }
@@ -46,11 +58,6 @@ if (!isset($_SESSION['login_user'])) {
 	    }
 	    ?>
 	    <form action="editpostprocess" method="post" enctype="multipart/form-data">
-		<?php
-		if (isset($register_message)) {
-		    echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
-		}
-		?>
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="post_title">Title:</label>
 		    <div class="col-sm-10">
@@ -69,7 +76,10 @@ if (!isset($_SESSION['login_user'])) {
 		    <label class="control-label col-sm-2" for="picture">Picture:</label>
 		    <div class="col-sm-10"> 
 			<div class="fileinput fileinput-new" data-provides="fileinput">
-			    <div class="fileinput-preview thumbnail no-border" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+			    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;" data-trigger="fileinput">
+				<img src="images/uploads/<?php echo $post_image; ?>" alt="...">
+			    </div>
+			    <div class="fileinput-preview fileinput-exists thumbnail no-border" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
 			    <div>
 				<span class="btn btn-default btn-file no-border"><span class="fileinput-new">Choose Picture (Optional)</span><span class="fileinput-exists">Change</span><input type="file" name="picture"></span>
 				<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
@@ -80,13 +90,14 @@ if (!isset($_SESSION['login_user'])) {
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="allow_comments">Comments:</label>
 		    <div class="col-sm-10 checkbox">
-			<label class="radio-inline"><input type="radio" name="allow_comments" value="1" checked>Yes (Default)</label>
+			<label class="radio-inline"><input type="radio" name="allow_comments" value="1" checked>Yes</label>
 			<label class="radio-inline"><input type="radio" name="allow_comments" value="0">No</label>
 		    </div>
 		</div>
 		<div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
 			<input type="hidden" name="member_id" value="<?php echo htmlspecialchars($_SESSION["id"]); ?>">
+			<input type="hidden" name="post_id" value="<?php echo htmlspecialchars($post_id); ?>">
 			<button class="btn btn-default no-border submit" type="submit">PROCEED</button>
 		    </div>
 		</div>

@@ -43,11 +43,6 @@ if (!isset($_SESSION['login_user'])) {
 	    }
 	    ?>
 	    <form action="addpostprocess" method="post" enctype="multipart/form-data">
-		<?php
-		if (isset($register_message)) {
-		    echo "<div id='message' title='Click to Dismiss'>" . $register_message . "</div>";
-		}
-		?>
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="post_title">Title:</label>
 		    <div class="col-sm-10">

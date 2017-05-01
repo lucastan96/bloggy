@@ -19,7 +19,7 @@ if (!isset($_SESSION['login_user'])) {
     <head>
 	<?php include("Includes/head.php"); ?>
 	<title>Manage Users - Bloggy</title>
-	<link href="styles/manage.css" rel="stylesheet">
+	<link href="styles/about.css" rel="stylesheet">
 	<link href="Scripts/JasnyBootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
     </head>
     <body>
@@ -31,14 +31,9 @@ if (!isset($_SESSION['login_user'])) {
 	</div>
 
 	<div class='container main-content'>
-	    <?php
-	    if (isset($message)) {
-		echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
-	    }
-	    ?>
-	    <form>
-		
-	    </form>
+	    <div class="about-content">
+		<h2>Page Under Construction</h2>
+	    </div>
 	</div>
 
 	<?php include("Includes/footer.php"); ?>
@@ -51,7 +46,7 @@ if (!isset($_SESSION['login_user'])) {
 	    $(document).ready(function () {
 		$(".left:nth-child(2)").addClass("active");
 		$(".banner").delay(100).animate({opacity: 1}, 300);
-		$("form").delay(250).animate({opacity: 1}, 300);
+		$(".about-content").delay(250).animate({opacity: 1}, 300);
 	    });
 	</script>
     </body>

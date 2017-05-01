@@ -4,13 +4,11 @@ $request_method = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_S
 
 if ($request_method == 'POST') {
     require_once('includes/connection.php');
+    require_once('includes/constants.php');
 
     $target_dir = "images/profiles/";
     $target_file = $target_dir . basename($_FILES["picture"]["name"]);
     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-
-    define("WIDTH", 500);
-    define("HEIGHT", 500);
 
     $check = getimagesize($_FILES["picture"]["tmp_name"]);
     if ($check == FALSE) {
@@ -22,7 +20,7 @@ if ($request_method == 'POST') {
 	exit();
     }
 
-    if ($_FILES["picture"]["size"] > 50000000) {
+    if ($_FILES["picture"]["size"] > IMG_SIZE) {
 	$message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Uploaded file is too large.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
     }
 
