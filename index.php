@@ -89,11 +89,6 @@ function truncate($text, $chars = 25) {
 			    $result_array2 = $statement2->fetchAll();
 			    $statement2->closeCursor();
                             
-//                                                        for ($x = 0 ; $x<sizeof($result_array2) ; $x++){
-//                                                            $post = new post_class($result_array2[$x]['post_id'], $result_array2[$x]['post_title'], $result_array2[$x]['post_content'], $result_array2[$x]['post_image'], $result_array2[$x]['post_date'], $result_array2[$x]['member_id']);
-//                                                            $array_post[$x] = $post;
-//                                                        }
-
 			    foreach ($result_array2 as $result2):
 				$tags_array = explode(",", $result["post_tags"]);
 				?>
