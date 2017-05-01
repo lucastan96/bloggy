@@ -9,16 +9,16 @@ if (!isset($_SESSION['login_user'])) {
     exit();
 } else {
     if (!isset($message)) {
-	if (isset($_SESSION['profileUpdated'])) {
-	    $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
-	    $_SESSION['profileUpdated'] = null;
-	} else if (isset($_SESSION['profilePasswordUpdated'])) {
-	    $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile password has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
-	    $_SESSION['profilePasswordUpdated'] = null;
-	} else if (isset($_SESSION['profilePicUpdated'])) {
-	    $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile picture has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
-	    $_SESSION['profilePicUpdated'] = null;
-	}
+        if (isset($_SESSION['profileUpdated'])) {
+            $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            $_SESSION['profileUpdated'] = null;
+        } else if (isset($_SESSION['profilePasswordUpdated'])) {
+            $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile password has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            $_SESSION['profilePasswordUpdated'] = null;
+        } else if (isset($_SESSION['profilePicUpdated'])) {
+            $message = "<i class='fa fa-info-circle' aria-hidden='true'></i>Your profile picture has been updated.<div><i class='fa fa-times' aria-hidden='true'></i></div>";
+            $_SESSION['profilePicUpdated'] = null;
+        }
     }
 }
 
@@ -75,12 +75,12 @@ $statement5->closeCursor();
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<?php include("Includes/head.php"); ?>
+        <?php include("Includes/head.php"); ?>
         <title>Profile - Bloggy</title>
         <link href="styles/profile.css" rel="stylesheet">
     </head>
     <body>
-	<?php include("Includes/nav.php"); ?>
+        <?php include("Includes/nav.php"); ?>
 
         <div class="banner">
             <h2>Profile</h2>
@@ -88,11 +88,11 @@ $statement5->closeCursor();
         </div>
 
         <div class='container main-content'>
-	    <?php
-	    if (isset($message)) {
-		echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
-	    }
-	    ?>
+            <?php
+            if (isset($message)) {
+                echo "<div id='message' title='Click to Dismiss'>" . $message . "</div>";
+            }
+            ?>
             <div class="profile-details">
                 <div class='row'>
                     <div class='col-sm-6'>
@@ -106,21 +106,21 @@ $statement5->closeCursor();
                     <div class='col-sm-6'>
                         <div class='profile-name'><?php echo htmlspecialchars($first_name) . " " . htmlspecialchars($last_name); ?></div>
                         <div class='profile-status'>
-			    <?php
-			    if ($user_status == 0) {
-				$user_pos = "Member";
-			    } else if ($user_status == 1) {
-				$user_pos = "Writer";
-			    } else if ($user_status == 2) {
-				$user_pos = "Admin";
-			    }
-			    echo "<span>" . $user_pos . "</span>";
-			    ?>
+                            <?php
+                            if ($user_status == 0) {
+                                $user_pos = "Member";
+                            } else if ($user_status == 1) {
+                                $user_pos = "Writer";
+                            } else if ($user_status == 2) {
+                                $user_pos = "Admin";
+                            }
+                            echo "<span>" . $user_pos . "</span>";
+                            ?>
                         </div>
                     </div>
                 </div>
 
-		<div class='profile-settings'>
+                <div class='profile-settings'>
                     <form class="form-horizontal" method="post" action="includes/editprofileprocess.php">
                         <h3>Personal Details</h3>
                         <p>Your personal details are displayed below, as well as an option to change your details.</p>
@@ -148,9 +148,9 @@ $statement5->closeCursor();
                             <div class="col-sm-11">
                                 <select class="form-control no-border input" id="category" name="yourCountry" required>
                                     <option value="<?php echo htmlspecialchars($country_id); ?>" selected="selected"><?php echo htmlspecialchars($country_name) ?></option>
-				    <?php foreach ($result_array4 as $countries) : ?>
-    				    <option value="<?php echo $countries['country_id']; ?>"><?php echo htmlspecialchars($countries['country_name']); ?></option>
-				    <?php endforeach; ?>
+                                    <?php foreach ($result_array4 as $countries) : ?>
+                                        <option value="<?php echo $countries['country_id']; ?>"><?php echo htmlspecialchars($countries['country_name']); ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -176,7 +176,7 @@ $statement5->closeCursor();
                                 <input type="password" class="form-control no-border input" name="currentpassword" placeholder="Enter your current password" required>
                             </div>
                         </div>
-			<div class="form-group">
+                        <div class="form-group">
                             <label class="control-label col-sm-1" for="newpassword">New Password:</label>
                             <div class="col-sm-11">
                                 <input type="password" class="form-control no-border input" name="newpassword" placeholder="Enter your new password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
@@ -188,29 +188,34 @@ $statement5->closeCursor();
                                 <input type="password" class="form-control no-border input" name="confirmpassword" placeholder="Confirm your new password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                             </div>
                         </div>
-			<input type='hidden' name='email' value='<?php echo $email; ?>'>
+                        <input type='hidden' name='email' value='<?php echo $email; ?>'>
                         <button class="btn btn-default no-border submit" type="submit">UPDATE</button>
+                        <br>
+                    </form>
+                    <form class="form-horizontal" method="post" action="includes/deleteaccount">
+                        <input type='hidden' name='email' value='<?php echo $email; ?>'>
+                        <button class="btn btn-default no-border submit" type="submit">DELETE ACCOUNT</button>
                         <br>
                     </form>
                 </div>
             </div>
         </div>
 
-	<?php include("Includes/footer.php"); ?>
+        <?php include("Includes/footer.php"); ?>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>');</script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="scripts/JasnyBootstrap/js/jasny-bootstrap.min.js"></script>
         <script>
-	    $(document).ready(function () {
-		$(".left:nth-child(4)").addClass("active");
-		$(".banner").delay(100).animate({opacity: 1}, 300);
-		$(".profile-details").delay(200).animate({opacity: 1}, 300);
-		$("#message").click(function () {
-		    $("#message").fadeOut();
-		});
-	    });
+            $(document).ready(function () {
+                $(".left:nth-child(4)").addClass("active");
+                $(".banner").delay(100).animate({opacity: 1}, 300);
+                $(".profile-details").delay(200).animate({opacity: 1}, 300);
+                $("#message").click(function () {
+                    $("#message").fadeOut();
+                });
+            });
         </script>
     </body>
 </html>
